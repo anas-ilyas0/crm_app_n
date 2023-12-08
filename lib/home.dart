@@ -1,165 +1,186 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Home extends StatelessWidget {
+  //const Home({Key? key}) : super(key: key);
+  final String username;
+  const Home({super.key, required this.username});
 
-  @override
-  State<Home> createState() => _DashboardState();
-}
-
-class _DashboardState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('CRM'),
-        backgroundColor: Colors.blue,
-      ),
+    return SafeArea(
+        child: Scaffold(
+      // appBar: AppBar(
+      // centerTitle: true,
+      // elevation: 3,
+      // shadowColor: Colors.black,
+      // leading: const CircleAvatar(
+      // backgroundImage: AssetImage('images/login.png'), radius: 2),
+      // leadingWidth: 40,
+      // backgroundColor: Colors.white,
+      // title: Row(
+      // crossAxisAlignment: CrossAxisAlignment.start,
+      // children: [
+      // Column(
+      // crossAxisAlignment: CrossAxisAlignment.start,
+      // children: [
+      // Text(username),
+      // ],
+      // )
+      // ],
+      // ),
+      // actions: [
+      // IconButton(
+      // onPressed: () {
+      // Navigator.pop(context);
+      // },
+      // icon: const Icon(Icons.logout, color: Colors.blue))
+      // ],
+      // ),
       backgroundColor: const Color(0xFFF4F9FD),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
+      body: SingleChildScrollView(
+          child: Column(children: [
+        Card(
+          shape: Border.all(style: BorderStyle.none),
+          color: const Color(0xFFF4F9FD),
+          margin: const EdgeInsets.all(0),
+          elevation: 3,
+          child: ListTile(
+            leading: const CircleAvatar(
+              backgroundImage: AssetImage('images/emily.png'),
+            ),
+            title: Text(username,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            subtitle: Text(username,
+                style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold)),
+            trailing: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+                icon: const Icon(
+                  Icons.logout,
+                  color: Colors.blue,
+                )),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 25),
           child: GridView(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3, childAspectRatio: 1),
             children: const [
               GridTileofApp(
-                firstText: 'Dashboard',
-                secondText: '',
-                iconData: Icons.settings,
-              ),
+                  firstText: 'Dashboard',
+                  secondText: '',
+                  image: 'images/dashboard.png'),
               GridTileofApp(
-                firstText: 'Leads',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Leads', secondText: '', image: 'images/lead.png'),
               GridTileofApp(
-                firstText: 'Sales',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Sales',
+                  secondText: '',
+                  image: 'images/sales.png'),
               GridTileofApp(
-                firstText: 'Recurring',
-                secondText: 'Invoices',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Recurring',
+                  secondText: 'Invoices',
+                  image: 'images/invoice.png'),
               GridTileofApp(
-                firstText: 'Product',
-                secondText: 'Management',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Product',
+                  secondText: 'Management',
+                  image: 'images/product.png'),
               GridTileofApp(
-                firstText: 'Purchase',
-                secondText: 'Orders',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Purchase',
+                  secondText: 'Orders',
+                  image: 'images/purchase.png'),
               GridTileofApp(
-                firstText: 'Contact',
-                secondText: 'Management',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Contact',
+                  secondText: 'Management',
+                  image: 'images/contact.png'),
               GridTileofApp(
-                firstText: 'User',
-                secondText: 'Management',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'User',
+                  secondText: 'Management',
+                  image: 'images/user.png'),
               GridTileofApp(
-                firstText: 'Projects',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Projects',
+                  secondText: '',
+                  image: 'images/project.png'),
               GridTileofApp(
-                firstText: 'Accounting',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Accounting',
+                  secondText: '',
+                  image: 'images/accounting.png'),
               GridTileofApp(
-                firstText: 'Cart',
-                secondText: 'Orders',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Cart',
+                  secondText: 'Orders',
+                  image: 'images/cart.png'),
               GridTileofApp(
-                firstText: 'Task',
-                secondText: 'Management',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Task',
+                  secondText: 'Management',
+                  image: 'images/task.png'),
               GridTileofApp(
-                firstText: 'Assets',
-                secondText: 'Management',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Assets',
+                  secondText: 'Management',
+                  image: 'images/asset.png'),
               GridTileofApp(
-                firstText: 'Content',
-                secondText: 'Management',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Content',
+                  secondText: 'Management',
+                  image: 'images/content.png'),
               GridTileofApp(
-                firstText: 'Generated',
-                secondText: 'Reports',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Generated',
+                  secondText: 'Reports',
+                  image: 'images/report.png'),
               GridTileofApp(
-                firstText: 'Quick',
-                secondText: 'Notifications',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Quick',
+                  secondText: 'Notifications',
+                  image: 'images/notification.png'),
               GridTileofApp(
-                firstText: 'Knowledgebase',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Knowledgebase',
+                  secondText: '',
+                  image: 'images/knowledge.png'),
               GridTileofApp(
-                firstText: 'Global',
-                secondText: 'settings',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Global',
+                  secondText: 'settings',
+                  image: 'images/setting.png'),
               GridTileofApp(
-                firstText: 'Plugins',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Plugins',
+                  secondText: '',
+                  image: 'images/plugin.png'),
               GridTileofApp(
-                firstText: 'Messages',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Messages',
+                  secondText: '',
+                  image: 'images/message.png'),
               GridTileofApp(
-                firstText: 'Todo',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Todo', secondText: '', image: 'images/todo.png'),
               GridTileofApp(
-                firstText: 'Goals',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Goals', secondText: '', image: 'images/goal.png'),
               GridTileofApp(
-                firstText: 'Ticket',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Ticket',
+                  secondText: '',
+                  image: 'images/ticket.png'),
               GridTileofApp(
-                firstText: 'Logout',
-                secondText: '',
-                iconData: Icons.abc,
-              ),
+                  firstText: 'Logout',
+                  secondText: '',
+                  image: 'images/logout.png'),
             ],
           ),
         ),
-      ),
-    );
+      ])),
+    ));
   }
 }
 
 class GridTileofApp extends StatelessWidget {
   const GridTileofApp({
     Key? key,
-    required this.iconData,
+    required this.image,
     required this.firstText,
     required this.secondText,
   }) : super(key: key);
 
-  final IconData iconData;
+  final String image;
   final String firstText;
   final String secondText;
 
@@ -171,7 +192,7 @@ class GridTileofApp extends StatelessWidget {
           Navigator.pushNamed(context, '/dashboard');
         }
         if (firstText == 'Leads') {
-          Navigator.pushNamed(context, '/leads');
+          Navigator.pushNamed(context, '/allLeads');
         }
         if (firstText == 'Sales') {
           Navigator.pushNamed(context, '/sales');
@@ -239,19 +260,17 @@ class GridTileofApp extends StatelessWidget {
         if (firstText == 'Logout') {
           Navigator.pushNamed(context, '/logout');
         }
-        if (firstText == 'Add') {
-          Navigator.pushNamed(context, '/create');
-        }
-        if (firstText == 'All') {
-          Navigator.pushNamed(context, '/allLeads');
-        }
       },
       child: Column(
         children: [
-          Icon(iconData),
+          Image(
+            image: AssetImage(image),
+            width: 45,
+            height: 45,
+          ),
           const SizedBox(height: 10),
-          Text(firstText),
-          Text(secondText),
+          Text(firstText, style: const TextStyle(fontSize: 12)),
+          Text(secondText, style: const TextStyle(fontSize: 12)),
         ],
       ),
     );

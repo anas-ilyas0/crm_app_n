@@ -11,7 +11,7 @@ import 'package:crm_new/global_settings.dart';
 import 'package:crm_new/goals.dart';
 import 'package:crm_new/home.dart';
 import 'package:crm_new/knowledgebase.dart';
-import 'package:crm_new/leads.dart';
+import 'package:crm_new/login.dart';
 import 'package:crm_new/messages.dart';
 import 'package:crm_new/plugins.dart';
 import 'package:crm_new/product_management.dart';
@@ -44,10 +44,10 @@ class MyApp extends StatelessWidget {
           create: (context) => UserProvider(),
         )
       ],
-      child: MaterialApp(home: const Home(), routes: {
-        '/home': (context) => const Home(),
+      child: MaterialApp(home: const Login(), routes: {
+        '/login': (context) => const Login(),
+        '/home': (context) => const Home(username: ''),
         '/dashboard': (context) => const Dashboard(),
-        '/leads': (context) => const Leads(),
         '/sales': (context) => const Sales(),
         '/recurring': (context) => const RecurringInvoices(),
         '/product': (context) => const ProductManagement(),
@@ -69,8 +69,8 @@ class MyApp extends StatelessWidget {
         '/todo': (context) => const Todo(),
         '/goals': (context) => const Goals(),
         '/ticket': (context) => const Ticket(),
-        '/create': (context) => const CreateLead(),
         '/allLeads': (context) => AllLeads(),
+        '/create': (context) => const CreateLead(),
       }),
     );
   }
