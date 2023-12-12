@@ -97,7 +97,7 @@ class Home extends StatelessWidget {
                   secondText: 'Orders',
                   image: 'images/purchase.png'),
               GridTileofApp(
-                  firstText: 'Contact',
+                  firstText: 'Contacts',
                   secondText: 'Management',
                   image: 'images/contact.png'),
               GridTileofApp(
@@ -206,7 +206,7 @@ class GridTileofApp extends StatelessWidget {
         if (firstText == 'Purchase') {
           Navigator.pushNamed(context, '/purchase');
         }
-        if (firstText == 'Contact') {
+        if (firstText == 'Contacts') {
           Navigator.pushNamed(context, '/contact');
         }
         if (firstText == 'User') {
@@ -259,6 +259,18 @@ class GridTileofApp extends StatelessWidget {
         }
         if (firstText == 'Logout') {
           Navigator.pushNamed(context, '/logout');
+        }
+        if (firstText == 'Details') {
+          Navigator.pushNamed(context, '/details');
+        }
+        if (secondText == 'Notes') {
+          Navigator.pushNamed(context, '/contactNotes');
+        }
+        if (secondText == 'Documents') {
+          Navigator.pushNamed(context, '/contactDoc');
+        }
+        if (firstText == 'Proposals') {
+          Navigator.pushNamed(context, '/proposals');
         }
       },
       child: Column(

@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'package:crm_new/accounting.dart';
 import 'package:crm_new/all_registered_leads.dart';
 import 'package:crm_new/assets_management.dart';
 import 'package:crm_new/cart_orders.dart';
+import 'package:crm_new/contact_doc.dart';
 import 'package:crm_new/contact_management.dart';
+import 'package:crm_new/contact_notes.dart';
 import 'package:crm_new/content_management.dart';
 import 'package:crm_new/create_lead.dart';
 import 'package:crm_new/dashboard.dart';
@@ -11,11 +14,13 @@ import 'package:crm_new/global_settings.dart';
 import 'package:crm_new/goals.dart';
 import 'package:crm_new/home.dart';
 import 'package:crm_new/knowledgebase.dart';
+import 'package:crm_new/lead_details.dart';
 import 'package:crm_new/login.dart';
 import 'package:crm_new/messages.dart';
 import 'package:crm_new/plugins.dart';
 import 'package:crm_new/product_management.dart';
 import 'package:crm_new/projects.dart';
+import 'package:crm_new/proposals.dart';
 import 'package:crm_new/providers/user_provider.dart';
 import 'package:crm_new/purchase_orders.dart';
 import 'package:crm_new/quick_notifications.dart';
@@ -25,6 +30,7 @@ import 'package:crm_new/task_management.dart';
 import 'package:crm_new/ticket.dart';
 import 'package:crm_new/todo.dart';
 import 'package:crm_new/user_managements.dart';
+import 'package:crm_new/view_lead.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/recurring': (context) => const RecurringInvoices(),
         '/product': (context) => const ProductManagement(),
         '/purchase': (context) => const PurchaseOrders(),
-        '/contact': (context) => const ContactManagement(),
+        '/contacts': (context) => const ContactManagement(),
         '/user': (context) => const UserManagement(),
         '/projects': (context) => const Projects(),
         '/accounting': (context) => const Accounting(),
@@ -69,8 +75,15 @@ class MyApp extends StatelessWidget {
         '/todo': (context) => const Todo(),
         '/goals': (context) => const Goals(),
         '/ticket': (context) => const Ticket(),
-        '/allLeads': (context) => AllLeads(),
+        '/allLeads': (context) => AllLeads(
+              image: File(''),
+            ),
         '/create': (context) => const CreateLead(),
+        '/view': (context) => const ViewLead(),
+        '/details': (context) => const LeadDetils(),
+        '/contactNotes': (context) => const ContactNotes(),
+        '/contactDoc': (context) => const ContactDocuments(),
+        '/proposals': (context) => const Proposals(),
       }),
     );
   }

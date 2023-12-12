@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:crm_new/all_registered_leads.dart';
 import 'package:crm_new/providers/user_provider.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +70,9 @@ class _CreateLeadState extends State<CreateLead> {
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
-      selectedImage = File(returnedImage!.path);
+      if (returnedImage != null) {
+        selectedImage = File(returnedImage.path);
+      }
     });
   }
 
@@ -115,16 +117,16 @@ class _CreateLeadState extends State<CreateLead> {
                   controller: email,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
-                  validator: (value) {
-                    if (value!.isEmpty ||
-                        !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}')
-                            .hasMatch(value)) {
-                      return "Enter Correct Email";
-                    } else {
-                      return null;
-                    }
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  // validator: (value) {
+                  // if (value!.isEmpty ||
+                  // !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}')
+                  // .hasMatch(value)) {
+                  // return "Enter Correct Email";
+                  // } else {
+                  // return null;
+                  // }
+                  // },
+                  // autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Address')),
@@ -478,8 +480,12 @@ class _CreateLeadState extends State<CreateLead> {
                       newContactType: contactTypee,
                     );
                     currentStep += 1;
-                    if (currentStep == 6) {
-                      Navigator.pushNamed(context, '/allLeads');
+                    if (currentStep == 6 && selectedImage != null) {
+                      //Navigator.pushNamed(context, '/allLeads');
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return AllLeads(image: selectedImage!);
+                      }));
                     }
                   });
                 } else {
