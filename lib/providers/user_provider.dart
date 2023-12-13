@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {
   String name, email, address, contactType;
   String receivedData;
+  File? image;
   bool dataAvailable = false;
 
   UserProvider({
@@ -11,6 +14,7 @@ class UserProvider extends ChangeNotifier {
     this.address = '',
     this.contactType = '',
     this.receivedData = '',
+    this.image,
   });
 
   void changeData({
@@ -18,11 +22,13 @@ class UserProvider extends ChangeNotifier {
     required String newEmail,
     required String newAddress,
     required String newContactType,
+    required File? newImage,
   }) async {
     name = newName;
     email = newEmail;
     address = newAddress;
     contactType = newContactType;
+    image = newImage;
     dataAvailable = true;
     notifyListeners();
   }

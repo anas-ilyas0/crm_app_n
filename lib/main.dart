@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:crm_new/accounting.dart';
 import 'package:crm_new/all_registered_leads.dart';
 import 'package:crm_new/assets_management.dart';
@@ -75,9 +74,7 @@ class MyApp extends StatelessWidget {
         '/todo': (context) => const Todo(),
         '/goals': (context) => const Goals(),
         '/ticket': (context) => const Ticket(),
-        '/allLeads': (context) => AllLeads(
-              image: File(''),
-            ),
+        '/allLeads': (context) => const AllLeads(),
         '/create': (context) => const CreateLead(),
         '/view': (context) => const ViewLead(),
         '/details': (context) => const LeadDetils(),

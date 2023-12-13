@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'dart:io';
 import 'package:crm_new/all_registered_leads.dart';
 import 'package:crm_new/providers/user_provider.dart';
@@ -92,7 +94,7 @@ class _CreateLeadState extends State<CreateLead> {
                       const InputDecoration(border: OutlineInputBorder()),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return ('Please Enter Name');
+                      return ('Please enter your name');
                     }
                     return null;
                   },
@@ -117,16 +119,16 @@ class _CreateLeadState extends State<CreateLead> {
                   controller: email,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
-                  // validator: (value) {
-                  // if (value!.isEmpty ||
-                  // !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}')
-                  // .hasMatch(value)) {
-                  // return "Enter Correct Email";
-                  // } else {
-                  // return null;
-                  // }
-                  // },
-                  // autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value!.isEmpty ||
+                        !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}')
+                            .hasMatch(value)) {
+                      return "Enter valid email";
+                    } else {
+                      return null;
+                    }
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Address')),
@@ -459,6 +461,35 @@ class _CreateLeadState extends State<CreateLead> {
           child: Form(
             key: _formKey,
             child: Stepper(
+              connectorColor: const MaterialStatePropertyAll(Colors.indigo),
+              controlsBuilder: (BuildContext context, ControlsDetails details) {
+                return Container(
+                  margin: const EdgeInsets.only(top: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (currentStep != 0)
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.indigo),
+                            onPressed: details.onStepCancel,
+                            child: const Text(
+                              'Previous',
+                              style: TextStyle(color: Colors.white),
+                            )),
+                      const SizedBox(width: 12),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.indigo),
+                          onPressed: details.onStepContinue,
+                          child: Text(
+                            currentStep == 5 ? 'Save' : 'Next',
+                            style: const TextStyle(color: Colors.white),
+                          )),
+                    ],
+                  ),
+                );
+              },
               steps: stepList(),
               type: StepperType.horizontal,
               elevation: 0,
@@ -471,27 +502,25 @@ class _CreateLeadState extends State<CreateLead> {
               },
               onStepContinue: () {
                 if (_formKey.currentState!.validate()) {
+                  currentStep += 1;
                   setState(() {
                     String fullName = '${firstName.text}  ${lastName.text}';
-                    dataProvider.changeData(
-                      newName: fullName,
-                      newEmail: email.text,
-                      newAddress: address.text,
-                      newContactType: contactTypee,
-                    );
-                    currentStep += 1;
-                    if (currentStep == 6 && selectedImage != null) {
-                      //Navigator.pushNamed(context, '/allLeads');
-                      Navigator.push(context,
+                    if (currentStep == 6) {
+                      dataProvider.changeData(
+                        newName: fullName,
+                        newEmail: email.text,
+                        newAddress: address.text,
+                        newContactType: contactTypee,
+                        newImage: selectedImage,
+                      );
+                      Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (BuildContext context) {
-                        return AllLeads(image: selectedImage!);
+                        return const AllLeads();
                       }));
                     }
                   });
                 } else {
-                  setState(() {
-                    // return null;
-                  });
+                  setState(() {});
                 }
               },
               onStepCancel: () {

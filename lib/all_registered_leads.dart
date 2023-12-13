@@ -1,20 +1,11 @@
-import 'dart:io';
 import 'package:crm_new/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class AllLeads extends StatelessWidget {
-  String name, email, contactInfo, currency;
-  File image;
-
-  AllLeads({
+  const AllLeads({
     super.key,
-    this.name = '',
-    this.email = '',
-    this.contactInfo = '',
-    this.currency = '',
-    required this.image,
   });
 
   @override
@@ -28,7 +19,7 @@ class AllLeads extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushNamed(context, '/home');
+            Navigator.pushReplacementNamed(context, '/home');
           },
         ),
         title: const Text(
@@ -60,7 +51,11 @@ class AllLeads extends StatelessWidget {
                   itemCount: 1,
                   itemBuilder: (BuildContext context, index) {
                     return ListTile(
-                        leading: Image.file(image),
+                        leading: CircleAvatar(
+                            backgroundColor: Colors.blue,
+                            backgroundImage: dataProvider.image != null
+                                ? FileImage(dataProvider.image!)
+                                : null),
                         title: Text('Name : \n${dataProvider.name}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +75,7 @@ class AllLeads extends StatelessWidget {
                                       value: 3,
                                       child: const Text('Edit'),
                                       onTap: () {
-                                        Navigator.pop(context);
+                                        Navigator.pushNamed(context, '/create');
                                       }),
                                   PopupMenuItem(
                                     value: 4,
