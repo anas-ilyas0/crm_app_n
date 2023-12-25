@@ -15,7 +15,7 @@ class _ContactDocumentsState extends State<ContactDocuments> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contact Notes'),
+        title: const Text('Contact Documents'),
       ),
       body: SafeArea(
           child: Padding(

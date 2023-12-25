@@ -51,42 +51,43 @@ class AllLeads extends StatelessWidget {
                   itemCount: 1,
                   itemBuilder: (BuildContext context, index) {
                     return ListTile(
-                        leading: CircleAvatar(
-                            backgroundColor: Colors.blue,
-                            backgroundImage: dataProvider.image != null
-                                ? FileImage(dataProvider.image!)
-                                : null),
-                        title: Text('Name : \n${dataProvider.name}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Email :${dataProvider.email}'),
-                            Text('Address : ${dataProvider.address}'),
-                            Text('Contact Type : ${dataProvider.contactType}'),
-                          ],
-                        ),
-                        trailing: PopupMenuButton(
-                            itemBuilder: (context) => [
-                                  const PopupMenuItem(
-                                      value: 1, child: Text('Create Proposal')),
-                                  const PopupMenuItem(
-                                      value: 2, child: Text('Send Email')),
-                                  PopupMenuItem(
-                                      value: 3,
-                                      child: const Text('Edit'),
-                                      onTap: () {
-                                        Navigator.pushNamed(context, '/create');
-                                      }),
-                                  PopupMenuItem(
-                                    value: 4,
-                                    child: const Text('View'),
+                      leading: CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          backgroundImage: dataProvider.image != null
+                              ? FileImage(dataProvider.image!)
+                              : null),
+                      title: Text('Name : \n${dataProvider.name}'),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Email :${dataProvider.email}'),
+                          Text('Address : ${dataProvider.address}'),
+                          Text('Contact Type : ${dataProvider.contactType}'),
+                        ],
+                      ),
+                      trailing: PopupMenuButton(
+                          itemBuilder: (context) => [
+                                const PopupMenuItem(
+                                    value: 1, child: Text('Create Proposal')),
+                                const PopupMenuItem(
+                                    value: 2, child: Text('Send Email')),
+                                PopupMenuItem(
+                                    value: 3,
+                                    child: const Text('Edit'),
                                     onTap: () {
-                                      Navigator.pushNamed(context, '/view');
-                                    },
-                                  ),
-                                  const PopupMenuItem(
-                                      value: 5, child: Text('Delete'))
-                                ]));
+                                      Navigator.pushNamed(context, '/create');
+                                    }),
+                                PopupMenuItem(
+                                  value: 4,
+                                  child: const Text('View'),
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/view');
+                                  },
+                                ),
+                                const PopupMenuItem(
+                                    value: 5, child: Text('Delete'))
+                              ]),
+                    );
                   });
             } else {
               return const Center(

@@ -11,9 +11,7 @@ class ViewLead extends StatelessWidget {
         appBar: AppBar(
           title: const Text(
             'View Lead',
-            //style: TextStyle(color: Colors.white),
           ),
-          //backgroundColor: Colors.blue,
         ),
         body: SafeArea(
           child: Padding(

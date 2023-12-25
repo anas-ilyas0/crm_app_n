@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 
 class Proposals extends StatefulWidget {
@@ -8,275 +10,200 @@ class Proposals extends StatefulWidget {
 }
 
 class _ProposalsState extends State<Proposals> {
-  bool? isChecked = false;
-  String entry = '20';
-  List<String> entries = ['20', '40', '60', '80'];
+  // final List<Map<String, String>> data = [
+  // {'Name': 'John', 'Age': '25', 'Role': 'Developer'},
+  // {'Name': 'Alice', 'Age': '30', 'Role': 'Designer'},
+  // {'Name': 'Bob', 'Age': '28', 'Role': 'Manager'},
+  // ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contact Notes'),
-      ),
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SearchBar(
-              backgroundColor: const MaterialStatePropertyAll(Colors.white),
-              elevation: const MaterialStatePropertyAll(4),
-              leading: const Icon(Icons.search),
-              hintText: 'Search',
-              trailing: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.clear))
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.blue,
+              centerTitle: true,
+              elevation: 0,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              title: const Text(
+                'Proposals',
+                style: TextStyle(color: Colors.white),
+              ),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/addProposal');
+                    },
+                    icon: const Icon(
+                      Icons.add_circle_rounded,
+                      color: Colors.white,
+                    ))
               ],
+              // bottom: const TabBar(
+              // labelColor: Colors.white,
+              // unselectedLabelColor: Colors.black54,
+              // tabs: [
+              // Tab(text: 'Progress'),
+              // Tab(text: 'Circle'),
+              // ],
+              // indicatorColor: Colors.white,
+              // ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                const Text(
-                  'Show',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(width: 10),
-                Container(
-                  height: 25,
-                  width: 50,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.black)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: DropdownButton<String>(
-                      underline: Container(),
-                      value: entry, // Currently selected item
-                      items:
-                          entries.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          entry = newValue!;
-                        });
-                      },
+            body: Column(children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(0)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Container(
+                        height: 280,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: Column(children: [
+                          Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: Text(
+                                'Proposals Summary',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              )),
+                          ListTile(
+                            title: const Text('Total Proposals'),
+                            trailing: const Text('10'),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            title: const Text('Total Accepted'),
+                            trailing: const Text('20'),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            title: const Text('Total Delivered'),
+                            trailing: const Text('30'),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            title: const Text('Total Rejected'),
+                            trailing: const Text('40'),
+                            onTap: () {},
+                          ),
+                        ]),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                          columns: const [
+                            DataColumn(label: Text('Proposal #')),
+                            DataColumn(label: Text('Title')),
+                            DataColumn(label: Text('Customer')),
+                            DataColumn(label: Text('Amount')),
+                            DataColumn(label: Text('Status')),
+                            DataColumn(label: Text('Publish status')),
+                            DataColumn(label: Text('Proposal date')),
+                            DataColumn(label: Text('Proposal expiry date')),
+                            DataColumn(label: Text('Actions')),
+                          ],
+                          rows: List<DataRow>.generate(
+                            8,
+                            (index) {
+                              return DataRow(cells: [
+                                const DataCell(
+                                  Center(
+                                    child: Text('Anas'),
+                                  ),
+                                ),
+                                const DataCell(
+                                  Center(
+                                    child: Text('25'),
+                                  ),
+                                ),
+                                const DataCell(
+                                  Center(
+                                    child: Text('Developer'),
+                                  ),
+                                ),
+                                const DataCell(
+                                  Center(
+                                    child: Text('Ali'),
+                                  ),
+                                ),
+                                const DataCell(
+                                  Center(
+                                    child: Text('25'),
+                                  ),
+                                ),
+                                const DataCell(
+                                  Center(
+                                    child: Text('Backend'),
+                                  ),
+                                ),
+                                const DataCell(
+                                  Center(
+                                    child: Text('Mohsin'),
+                                  ),
+                                ),
+                                const DataCell(
+                                  Center(
+                                    child: Text('25'),
+                                  ),
+                                ),
+                                DataCell(Center(
+                                  child: PopupMenuButton(
+                                      itemBuilder: (context) => [
+                                            PopupMenuItem(
+                                                value: 1,
+                                                child: const Text('Edit'),
+                                                onTap: () {}),
+                                            PopupMenuItem(
+                                              value: 2,
+                                              child: const Text('View'),
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                    context, '/viewProposal');
+                                              },
+                                            ),
+                                            PopupMenuItem(
+                                              value: 3,
+                                              child: const Text('Delete'),
+                                              onTap: () {},
+                                            )
+                                          ]),
+                                ))
+                              ]);
+                            },
+                          )),
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
-                const Text('entries',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold))
-              ],
-            ),
-            const SizedBox(height: 20),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                height: MediaQuery.of(context).size.height / 2,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Checkbox(
-                            value: (isChecked),
-                            activeColor: Colors.blue,
-                            tristate: false,
-                            onChanged: (value) {
-                              setState(() {
-                                isChecked = value;
-                              });
-                            }),
-                      ],
-                    ),
-                    const VerticalDivider(
-                      color: Colors.black,
-                      thickness: 0,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 15),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Proposal no.#',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: VerticalDivider(
-                        color: Colors.black,
-                        thickness: 0,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        top: 15,
-                        right: 10,
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Title',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 40),
-                      child: VerticalDivider(
-                        color: Colors.black,
-                        thickness: 0,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 15, right: 10),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Customer',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    const VerticalDivider(
-                      color: Colors.black,
-                      thickness: 0,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 15, right: 10),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Amount',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    const VerticalDivider(
-                      color: Colors.black,
-                      thickness: 0,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 15, right: 10),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Status',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    const VerticalDivider(
-                      color: Colors.black,
-                      thickness: 0,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 15, right: 10),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Publish status',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    const VerticalDivider(
-                      color: Colors.black,
-                      thickness: 0,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 15, right: 10),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Proposal date',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    const VerticalDivider(
-                      color: Colors.black,
-                      thickness: 0,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 15, right: 10),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Proposal expiry date',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                    onPressed: () {},
-                    child: const Text('Previous',
-                        style: TextStyle(color: Colors.black))),
-                TextButton(
-                    onPressed: () {},
-                    child: const Text('Next',
-                        style: TextStyle(color: Colors.black)))
-              ],
-            ),
-            const SizedBox(height: 10),
-            const Align(
-              alignment: Alignment.center,
-              child: Text('Showing 0 to 0 of 0 entries',
-                  style: TextStyle(fontSize: 12)),
-            ),
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7)),
-                        backgroundColor: Colors.blue),
-                    onPressed: () {},
-                    child: const Text(
-                      'Back to List',
-                      style: TextStyle(color: Colors.white),
-                    )),
-                const SizedBox(width: 99),
-                TextButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7)),
-                        backgroundColor: Colors.red),
-                    onPressed: () {},
-                    child: const Text(
-                      'Delete selected',
-                      style: TextStyle(color: Colors.white),
-                    ))
-              ],
-            )
-          ],
-        ),
-      )),
-    );
+            ])));
   }
 }

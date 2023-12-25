@@ -69,8 +69,8 @@ class Home extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 25),
           child: GridView(
-            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3, childAspectRatio: 1),
             children: const [
@@ -85,7 +85,7 @@ class Home extends StatelessWidget {
                   secondText: '',
                   image: 'images/sales.png'),
               GridTileofApp(
-                  firstText: 'Recurring',
+                  firstText: 'Recuring',
                   secondText: 'Invoices',
                   image: 'images/invoice.png'),
               GridTileofApp(
@@ -101,7 +101,7 @@ class Home extends StatelessWidget {
                   secondText: 'Management',
                   image: 'images/contact.png'),
               GridTileofApp(
-                  firstText: 'User',
+                  firstText: 'Users',
                   secondText: 'Management',
                   image: 'images/user.png'),
               GridTileofApp(
@@ -197,20 +197,44 @@ class GridTileofApp extends StatelessWidget {
         if (firstText == 'Sales') {
           Navigator.pushNamed(context, '/sales');
         }
-        if (firstText == 'Recurring') {
-          Navigator.pushNamed(context, '/recurring');
+        if (firstText == 'Recuring') {
+          Navigator.pushNamed(context, '/recuring');
+        }
+        if (firstText == 'Recurring' && secondText == 'Invoices') {
+          Navigator.pushNamed(context, '/recurringInvoices');
+        }
+        if (firstText == 'Recurring' && secondText == 'Periods') {
+          Navigator.pushNamed(context, '/recurringPeriods');
         }
         if (firstText == 'Product') {
           Navigator.pushNamed(context, '/product');
         }
+        if (firstText == 'All' && secondText == 'Products') {
+          Navigator.pushNamed(context, '/products');
+        }
+        if (firstText == 'Products' && secondText == 'Transfer') {
+          Navigator.pushNamed(context, '/productsTransfer');
+        }
+        if (firstText == 'Warehouses') {
+          Navigator.pushNamed(context, '/warehouses');
+        }
         if (firstText == 'Purchase') {
           Navigator.pushNamed(context, '/purchase');
         }
-        if (firstText == 'Contacts') {
-          Navigator.pushNamed(context, '/contact');
-        }
-        if (firstText == 'User') {
+        if (firstText == 'Users' && secondText == 'Management') {
           Navigator.pushNamed(context, '/user');
+        }
+        if (firstText == 'Users' && secondText == '') {
+          Navigator.pushNamed(context, '/users');
+        }
+        if (firstText == 'User' && secondText == 'Actions') {
+          Navigator.pushNamed(context, '/userActions');
+        }
+        if (firstText == 'Roles') {
+          Navigator.pushNamed(context, '/roles');
+        }
+        if (firstText == 'Departments') {
+          Navigator.pushNamed(context, '/departments');
         }
         if (firstText == 'Projects') {
           Navigator.pushNamed(context, '/projects');
@@ -258,19 +282,46 @@ class GridTileofApp extends StatelessWidget {
           Navigator.pushNamed(context, '/ticket');
         }
         if (firstText == 'Logout') {
-          Navigator.pushNamed(context, '/logout');
+          Navigator.pop(context);
         }
         if (firstText == 'Details') {
           Navigator.pushNamed(context, '/details');
         }
-        if (secondText == 'Notes') {
+        if (firstText == 'Contact' && secondText == 'Notes') {
           Navigator.pushNamed(context, '/contactNotes');
         }
-        if (secondText == 'Documents') {
+        if (firstText == 'Contact' && secondText == 'Documents') {
           Navigator.pushNamed(context, '/contactDoc');
         }
         if (firstText == 'Proposals') {
           Navigator.pushNamed(context, '/proposals');
+        }
+        if (secondText == 'Proposal') {
+          Navigator.pushNamed(context, '/addProposal');
+        }
+        if (firstText == 'Invoices') {
+          Navigator.pushNamed(context, '/invoices');
+        }
+        if (firstText == 'Credit' && secondText == 'Notes') {
+          Navigator.pushNamed(context, '/creditNotes');
+        }
+        if (firstText == 'Quotes') {
+          Navigator.pushNamed(context, '/quotes');
+        }
+        if (firstText == 'Contracts') {
+          Navigator.pushNamed(context, '/contracts');
+        }
+        if (firstText == 'Knowledgebase') {
+          Navigator.pushNamed(context, '/knowledgebase');
+        }
+        if (firstText == 'Contacts' && secondText == 'Management') {
+          Navigator.pushNamed(context, '/contact');
+        }
+        if (firstText == 'Contacts' && secondText == '') {
+          Navigator.pushNamed(context, '/contacts');
+        }
+        if (firstText == 'Mailchimp') {
+          Navigator.pushNamed(context, '/mailchimp');
         }
       },
       child: Column(
