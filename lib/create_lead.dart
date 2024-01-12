@@ -86,7 +86,6 @@ class _CreateLeadState extends State<CreateLead> {
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('First Name*')),
                 TextFormField(
                   controller: firstName,
@@ -98,13 +97,13 @@ class _CreateLeadState extends State<CreateLead> {
                     }
                     return null;
                   },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   // onChanged: (value) {
                   // dataProvider.name;
                   // },
                   // onSaved: (value) {
                   // dataProvider.name = value!;
                   // },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Last Name')),
@@ -177,7 +176,6 @@ class _CreateLeadState extends State<CreateLead> {
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('Currency')),
               DropdownButtonFormField2<String>(
                 isExpanded: true,
@@ -218,7 +216,6 @@ class _CreateLeadState extends State<CreateLead> {
               TextFormField(
                   decoration:
                       const InputDecoration(border: OutlineInputBorder())),
-              const SizedBox(height: 15),
             ],
           ),
         ),
@@ -229,7 +226,6 @@ class _CreateLeadState extends State<CreateLead> {
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('Tax ID')),
               TextFormField(
                 decoration: const InputDecoration(border: OutlineInputBorder()),
@@ -267,7 +263,6 @@ class _CreateLeadState extends State<CreateLead> {
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('Country')),
               DropdownButtonFormField2<String>(
                   isExpanded: true,
@@ -365,6 +360,13 @@ class _CreateLeadState extends State<CreateLead> {
                 readOnly: true,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
+              const SizedBox(height: 20),
+              const SizedBox(height: 25, child: Text('Last Name')),
+              TextField(
+                controller: copyLastName,
+                readOnly: true,
+                decoration: const InputDecoration(border: OutlineInputBorder()),
+              ),
             ],
           ),
         ),
@@ -375,14 +377,6 @@ class _CreateLeadState extends State<CreateLead> {
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Last Name')),
-              TextField(
-                controller: copyLastName,
-                readOnly: true,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('Address')),
               TextField(
                 controller: copyAddress,
@@ -403,16 +397,6 @@ class _CreateLeadState extends State<CreateLead> {
                 readOnly: true,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
-            ],
-          ),
-        ),
-        Step(
-          isActive: currentStep >= 5,
-          state: currentStep <= 5 ? StepState.editing : StepState.complete,
-          title: const Text(''),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
               const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('Zip/postal code')),
               TextField(
@@ -483,7 +467,7 @@ class _CreateLeadState extends State<CreateLead> {
                               backgroundColor: Colors.indigo),
                           onPressed: details.onStepContinue,
                           child: Text(
-                            currentStep == 5 ? 'Save' : 'Next',
+                            currentStep == 4 ? 'Save' : 'Next',
                             style: const TextStyle(color: Colors.white),
                           )),
                     ],
@@ -505,7 +489,7 @@ class _CreateLeadState extends State<CreateLead> {
                   currentStep += 1;
                   setState(() {
                     String fullName = '${firstName.text}  ${lastName.text}';
-                    if (currentStep == 6) {
+                    if (currentStep == 5) {
                       dataProvider.changeData(
                         newName: fullName,
                         newEmail: email.text,

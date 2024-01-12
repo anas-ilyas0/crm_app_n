@@ -4,5 +4,10 @@
         "knowledgebase",
         "Schyler"
     ],
-    "files.autoSave": "onFocusChange"
+    "files.autoSave": "onFocusChange",
+    "flutter-toolkit.quickFixes.copyWithConstructor": false,
+    "dart_data_class_generator.quick_fixes": false,
+    "dart-data-class-generator.quick_fixes": false,
+    "sudesh.quick_fixes": false,
+    "editor.codeActionWidget.includeNearbyQuickFixes": false
 }

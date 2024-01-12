@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  //const Home({Key? key}) : super(key: key);
   final String username;
   const Home({super.key, required this.username});
 
@@ -9,33 +8,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      // appBar: AppBar(
-      // centerTitle: true,
-      // elevation: 3,
-      // shadowColor: Colors.black,
-      // leading: const CircleAvatar(
-      // backgroundImage: AssetImage('images/login.png'), radius: 2),
-      // leadingWidth: 40,
-      // backgroundColor: Colors.white,
-      // title: Row(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      // children: [
-      // Column(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      // children: [
-      // Text(username),
-      // ],
-      // )
-      // ],
-      // ),
-      // actions: [
-      // IconButton(
-      // onPressed: () {
-      // Navigator.pop(context);
-      // },
-      // icon: const Icon(Icons.logout, color: Colors.blue))
-      // ],
-      // ),
       backgroundColor: const Color(0xFFF4F9FD),
       body: SingleChildScrollView(
           child: Column(children: [
@@ -58,7 +30,7 @@ class Home extends StatelessWidget {
                     fontWeight: FontWeight.bold)),
             trailing: IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.of(context).pop();
                 },
                 icon: const Icon(
                   Icons.logout,
@@ -117,12 +89,10 @@ class Home extends StatelessWidget {
                   secondText: 'Orders',
                   image: 'images/cart.png'),
               GridTileofApp(
-                  firstText: 'Task',
-                  secondText: 'Management',
-                  image: 'images/task.png'),
+                  firstText: 'Tasks', secondText: '', image: 'images/task.png'),
               GridTileofApp(
                   firstText: 'Assets',
-                  secondText: 'Management',
+                  secondText: '',
                   image: 'images/asset.png'),
               GridTileofApp(
                   firstText: 'Content',
@@ -209,11 +179,20 @@ class GridTileofApp extends StatelessWidget {
         if (firstText == 'Product') {
           Navigator.pushNamed(context, '/product');
         }
+        if (firstText == 'Business') {
+          Navigator.pushNamed(context, '/businessList');
+        }
         if (firstText == 'All' && secondText == 'Products') {
           Navigator.pushNamed(context, '/products');
         }
         if (firstText == 'Products' && secondText == 'Transfer') {
           Navigator.pushNamed(context, '/productsTransfer');
+        }
+        if (firstText == 'Brands') {
+          Navigator.pushNamed(context, '/brands');
+        }
+        if (firstText == 'Measurement') {
+          Navigator.pushNamed(context, '/measurementUnits');
         }
         if (firstText == 'Warehouses') {
           Navigator.pushNamed(context, '/warehouses');
@@ -242,23 +221,77 @@ class GridTileofApp extends StatelessWidget {
         if (firstText == 'Accounting') {
           Navigator.pushNamed(context, '/accounting');
         }
-        if (firstText == 'Cart') {
-          Navigator.pushNamed(context, '/cart');
+        if (firstText == 'Incomes') {
+          Navigator.pushNamed(context, '/incomes');
         }
-        if (firstText == 'Task') {
+        if (firstText == 'Expenses') {
+          Navigator.pushNamed(context, '/expenses');
+        }
+        if (firstText == 'Monthly' && secondText == 'Reports') {
+          Navigator.pushNamed(context, '/monthlyReports');
+        }
+        if (firstText == 'Transfers') {
+          Navigator.pushNamed(context, '/transfers');
+        }
+        if (firstText == 'Accounts') {
+          Navigator.pushNamed(context, '/accounts');
+        }
+        if (firstText == 'Cart') {
+          Navigator.pushNamed(context, '/cartOrders');
+        }
+        if (firstText == 'Place') {
+          Navigator.pushNamed(context, '/place');
+        }
+        if (firstText == 'Tasks' && secondText == '') {
           Navigator.pushNamed(context, '/task');
         }
-        if (firstText == 'Assets') {
+        if (firstText == 'Assets' && secondText == '') {
           Navigator.pushNamed(context, '/assets');
         }
         if (firstText == 'Content') {
           Navigator.pushNamed(context, '/content');
         }
-        if (firstText == 'Generated') {
+        if (firstText == 'Categories') {
+          Navigator.pushNamed(context, '/categories');
+        }
+        if (firstText == 'Tags') {
+          Navigator.pushNamed(context, '/tags');
+        }
+        if (firstText == 'Pages') {
+          Navigator.pushNamed(context, '/pages');
+        }
+        if (firstText == 'Articles') {
+          Navigator.pushNamed(context, '/articles');
+        }
+        if (firstText == 'Generated' && secondText == 'Reports') {
           Navigator.pushNamed(context, '/generated');
         }
-        if (firstText == 'Quick') {
-          Navigator.pushNamed(context, '/quick');
+        if (firstText == 'Income' && secondText == 'Report') {
+          Navigator.pushNamed(context, '/incomeReport');
+        }
+        if (firstText == 'Expense' && secondText == 'Report') {
+          Navigator.pushNamed(context, '/expenseReport');
+        }
+        if (firstText == 'Users' && secondText == 'Report') {
+          Navigator.pushNamed(context, '/usersReport');
+        }
+        if (firstText == 'User Roles' && secondText == 'Report') {
+          Navigator.pushNamed(context, '/userRolesReport');
+        }
+        if (firstText == 'Client Projects' && secondText == 'Report') {
+          Navigator.pushNamed(context, '/clientProjectsReport');
+        }
+        if (firstText == 'Tasks' && secondText == 'Report') {
+          Navigator.pushNamed(context, '/tasksReport');
+        }
+        if (firstText == 'Assets' && secondText == 'Report') {
+          Navigator.pushNamed(context, '/assetsReport');
+        }
+        if (firstText == 'Products' && secondText == 'Report') {
+          Navigator.pushNamed(context, '/productsReport');
+        }
+        if (firstText == 'Purchase Orders' && secondText == 'Report') {
+          Navigator.pushNamed(context, '/purchaseOrdersReport');
         }
         if (firstText == 'Knowlwdgebase') {
           Navigator.pushNamed(context, '/knowledgebase');
@@ -311,8 +344,17 @@ class GridTileofApp extends StatelessWidget {
         if (firstText == 'Contracts') {
           Navigator.pushNamed(context, '/contracts');
         }
+        if (firstText == 'Quick' && secondText == 'Notifications') {
+          Navigator.pushNamed(context, '/quick');
+        }
         if (firstText == 'Knowledgebase') {
           Navigator.pushNamed(context, '/knowledgebase');
+        }
+        if (firstText == 'Category') {
+          Navigator.pushNamed(context, '/categoriess');
+        }
+        if (firstText == 'Plugins') {
+          Navigator.pushNamed(context, '/plugins');
         }
         if (firstText == 'Contacts' && secondText == 'Management') {
           Navigator.pushNamed(context, '/contact');

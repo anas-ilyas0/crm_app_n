@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CartOrders extends StatefulWidget {
-  const CartOrders({super.key});
+class Accounts extends StatefulWidget {
+  const Accounts({super.key});
 
   @override
-  State<CartOrders> createState() => _CartOrdersState();
+  State<Accounts> createState() => _AccountsState();
 }
 
-class _CartOrdersState extends State<CartOrders> {
+class _AccountsState extends State<Accounts> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -24,13 +24,13 @@ class _CartOrdersState extends State<CartOrders> {
                 },
               ),
               title: const Text(
-                'Cart Orders',
+                'Accounts',
                 style: TextStyle(color: Colors.white),
               ),
               actions: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/place');
+                      Navigator.pushNamed(context, '/addAccount');
                     },
                     icon: const Icon(
                       Icons.add_circle_rounded,
@@ -40,62 +40,6 @@ class _CartOrdersState extends State<CartOrders> {
               // bottom: const TabBar(
             ),
             body: Column(children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(0)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 18),
-                    child: Card(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Container(
-                        height: 280,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        child: Column(children: [
-                          Padding(
-                              padding: const EdgeInsets.all(14.0),
-                              child: Text(
-                                'Orders Summary',
-                                style: Theme.of(context).textTheme.titleLarge,
-                              )),
-                          ListTile(
-                            title: const Text('Total Orders Amount'),
-                            trailing: const Text('\$10'),
-                            onTap: () {},
-                          ),
-                          ListTile(
-                            title: const Text('Active Orders'),
-                            trailing: const Text('20'),
-                            onTap: () {},
-                          ),
-                          ListTile(
-                            title: const Text('Pending Orders'),
-                            trailing: const Text('30'),
-                            onTap: () {},
-                          ),
-                          ListTile(
-                            title: const Text('Cancelled Orders'),
-                            trailing: const Text('40'),
-                            onTap: () {},
-                          ),
-                        ]),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               const SizedBox(height: 10),
               Expanded(
                 child: SingleChildScrollView(
@@ -105,40 +49,43 @@ class _CartOrdersState extends State<CartOrders> {
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
                           columns: const [
-                            DataColumn(label: Text('ID')),
-                            DataColumn(label: Text('Customer')),
-                            DataColumn(label: Text('Status')),
-                            DataColumn(label: Text('Price')),
-                            DataColumn(label: Text('Billing cycle')),
+                            DataColumn(label: Text('Name')),
+                            DataColumn(label: Text('Initial balance')),
+                            DataColumn(label: Text('Account no')),
+                            DataColumn(label: Text('Contact person')),
+                            DataColumn(label: Text('Phone #')),
                             DataColumn(label: Text('Actions')),
                           ],
                           rows: List<DataRow>.generate(
-                            7,
+                            8,
                             (index) {
                               return DataRow(cells: [
                                 const DataCell(
                                   Center(
-                                    child: Text('17'),
+                                    child: Text('Bank of America'),
                                   ),
                                 ),
                                 const DataCell(
                                   Center(
-                                    child: Text('Domenic Weber'),
+                                    child: SingleChildScrollView(
+                                      child: Text(
+                                          'Balance : \$29,479.883\nTotal in : \$30,216.540\nTotal out : \$19,416.640'),
+                                    ),
                                   ),
                                 ),
                                 const DataCell(
                                   Center(
-                                    child: Text('Pending'),
+                                    child: Text('TEER2323'),
                                   ),
                                 ),
                                 const DataCell(
                                   Center(
-                                    child: Text('\$467'),
+                                    child: Text('Ronak'),
                                   ),
                                 ),
                                 const DataCell(
                                   Center(
-                                    child: Text('One time'),
+                                    child: Text('123456789'),
                                   ),
                                 ),
                                 DataCell(Center(
@@ -155,11 +102,6 @@ class _CartOrdersState extends State<CartOrders> {
                                             ),
                                             PopupMenuItem(
                                               value: 3,
-                                              child: const Text('Mark as'),
-                                              onTap: () {},
-                                            ),
-                                            PopupMenuItem(
-                                              value: 4,
                                               child: const Text('Delete'),
                                               onTap: () {},
                                             )

@@ -5,41 +5,27 @@ import 'package:flutter/material.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class AddPurchaseOrder extends StatefulWidget {
-  const AddPurchaseOrder({super.key});
+class PlaceNewOrder extends StatefulWidget {
+  const PlaceNewOrder({super.key});
 
   @override
-  State<AddPurchaseOrder> createState() => _AddPurchaseOrderState();
+  State<PlaceNewOrder> createState() => _PlaceNewOrderState();
 }
 
-class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
-  int currentStep = 0;
-  String supplier = '';
-  List<String> suppliers = ['Israel Bosco', 'Grover Emmerich', 'Carlo Conroy'];
+class _PlaceNewOrderState extends State<PlaceNewOrder> {
+  String customer = '';
+  List<String> customers = ['Israel Bosco', 'Grover Emmerich', 'Carlo Conroy'];
   String currency = '';
   List<String> currencies = [''];
   String condition = '';
   List<String> conditions = ['Yes', 'No'];
   String status = '';
-  List<String> statuses = ['Draft', 'Published'];
-  String tax = '';
-  List<String> taxes = [''];
-  String warehouse = '';
-  List<String> warehouses = [
-    'London Warehouse',
-    'Sydney Warehouse',
-    'Mexico Warehouse',
-    'Canada Warehouse'
-  ];
-  String discount = '';
-  List<String> discounts = [''];
-  String taxFormat = '';
-  List<String> taxFormats = ['Tax After Product Tax', 'Tax Before Product Tax'];
-  String discountFormat = '';
-  List<String> discountFormats = [
-    'Discount After Product Tax',
-    'Discount Before Product Tax'
-  ];
+  List<String> statuses = ['Active', 'Pending'];
+  String billingCycle = '';
+  List<String> billingCycles = ['One time', 'Day', 'Week', 'Month', 'Year'];
+  String recurringType = '';
+  List<String> recurringTypes = ['Day(s)', 'Week(s)', 'Month(s)', 'Year(s)'];
+  int currentStep = 0;
   List<Step> stepList() => [
         Step(
             isActive: currentStep >= 0,
@@ -48,7 +34,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 25, child: Text('Supplier*')),
+                const SizedBox(height: 25, child: Text('Customer*')),
                 DropdownButtonFormField2<String>(
                   isExpanded: true,
                   decoration: const InputDecoration(
@@ -56,7 +42,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                   ),
                   hint: const Text('Please select',
                       style: TextStyle(fontSize: 14)),
-                  items: suppliers
+                  items: customers
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
                             child: Text(
@@ -68,11 +54,11 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                           ))
                       .toList(),
                   onChanged: (value) {
-                    supplier = value.toString();
+                    customer = value.toString();
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return ('Please select one supplier');
+                      return ('Please select one customer');
                     }
                     return null;
                   },
@@ -113,17 +99,59 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const SizedBox(height: 25, child: Text('Subject')),
-                TextFormField(
-                  //controller: email,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
+                const SizedBox(height: 25, child: Text('Status*')),
+                DropdownButtonFormField2<String>(
+                  isExpanded: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  hint: const Text('Please select',
+                      style: TextStyle(fontSize: 14)),
+                  items: statuses
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    status = value.toString();
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return ('Choose a status');
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 20),
-                const SizedBox(height: 25, child: Text('Address')),
-                TextFormField(
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
+                const SizedBox(height: 25, child: Text('Billing Cycle')),
+                DropdownButtonFormField2<String>(
+                  isExpanded: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  hint: const Text('Please select',
+                      style: TextStyle(fontSize: 14)),
+                  items: billingCycles
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    billingCycle = value.toString();
+                  },
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Update Stock')),
@@ -158,29 +186,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 25, child: Text('Purchase order #')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Purchase order prefix')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(
-                  height: 25, child: Text('Purchase order issued date')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(
-                  height: 25, child: Text('Estimated time of travel')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Status')),
+              const SizedBox(height: 25, child: Text('Is Recurring')),
               DropdownButtonFormField2<String>(
                 isExpanded: true,
                 decoration: const InputDecoration(
@@ -188,7 +194,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                 ),
                 hint:
                     const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: statuses
+                items: conditions
                     .map((item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
@@ -200,10 +206,94 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  status = value.toString();
+                  condition = value.toString();
                 },
               ),
-              //const SizedBox(height: 15),
+              const SizedBox(height: 20),
+              const SizedBox(height: 25, child: Text('Recurring Type*')),
+              DropdownButtonFormField2<String>(
+                isExpanded: true,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+                hint:
+                    const Text('Please select', style: TextStyle(fontSize: 14)),
+                items: recurringTypes
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  recurringType = value.toString();
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return ('Please select');
+                  }
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+              ),
+              const SizedBox(height: 20),
+              const SizedBox(height: 25, child: Text('Recurring Value*')),
+              TextFormField(
+                decoration: const InputDecoration(border: OutlineInputBorder()),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return ('Enter a recurring value');
+                  }
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+              ),
+              const SizedBox(height: 20),
+              const SizedBox(height: 25, child: Text('Total Cycles')),
+              TextFormField(
+                decoration: const InputDecoration(border: OutlineInputBorder()),
+              ),
+              const SizedBox(height: 20),
+              const SizedBox(
+                  height: 25,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                        'Prevent Sending Overdue Remainders for this Order*'),
+                  )),
+              DropdownButtonFormField2<String>(
+                isExpanded: true,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+                hint:
+                    const Text('Please select', style: TextStyle(fontSize: 14)),
+                items: conditions
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  condition = value.toString();
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return ('Please select');
+                  }
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+              ),
             ],
           ),
         ),
@@ -214,40 +304,6 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 25, child: Text('Warehouse')),
-              DropdownButtonFormField2<String>(
-                isExpanded: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-                hint:
-                    const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: warehouses
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  warehouse = value.toString();
-                },
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Show quantity as')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Reference')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 10),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: DataTable(
@@ -265,10 +321,8 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                       )),
                       DataColumn(label: Text('Tax(%)')),
                       DataColumn(label: Text('Tax')),
-                      DataColumn(label: Text('Max discount')),
                       DataColumn(label: Text('Discount(%)')),
                       DataColumn(label: Text('Discount')),
-                      DataColumn(label: Text('Commision')),
                       DataColumn(label: Text('Amount')),
                       DataColumn(label: Text('Action')),
                     ],
@@ -311,16 +365,6 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                           const DataCell(
                             Center(
                               child: Text('25'),
-                            ),
-                          ),
-                          const DataCell(
-                            Center(
-                              child: Text('Backend'),
-                            ),
-                          ),
-                          const DataCell(
-                            Center(
-                              child: Text('Mohsin'),
                             ),
                           ),
                           const DataCell(
@@ -420,7 +464,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 25, child: Text('Tax')),
+              const SizedBox(height: 25, child: Text('Generate Invoice')),
               DropdownButtonFormField2<String>(
                 isExpanded: true,
                 decoration: const InputDecoration(
@@ -428,7 +472,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                 ),
                 hint:
                     const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: taxes
+                items: conditions
                     .map((item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
@@ -440,11 +484,11 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  tax = value.toString();
+                  condition = value.toString();
                 },
               ),
               const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Tax format')),
+              const SizedBox(height: 25, child: Text('Send Email')),
               DropdownButtonFormField2<String>(
                 isExpanded: true,
                 decoration: const InputDecoration(
@@ -452,7 +496,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                 ),
                 hint:
                     const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: taxFormats
+                items: conditions
                     .map((item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
@@ -464,11 +508,11 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  taxFormat = value.toString();
+                  condition = value.toString();
                 },
               ),
               const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Discount')),
+              const SizedBox(height: 25, child: Text('Send SMS')),
               DropdownButtonFormField2<String>(
                 isExpanded: true,
                 decoration: const InputDecoration(
@@ -476,7 +520,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                 ),
                 hint:
                     const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: discounts
+                items: conditions
                     .map((item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
@@ -488,11 +532,11 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  discount = value.toString();
+                  condition = value.toString();
                 },
               ),
               const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Discount format')),
+              const SizedBox(height: 25, child: Text('Add Payment to Income')),
               DropdownButtonFormField2<String>(
                 isExpanded: true,
                 decoration: const InputDecoration(
@@ -500,7 +544,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                 ),
                 hint:
                     const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: discountFormats
+                items: conditions
                     .map((item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
@@ -512,7 +556,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  discountFormat = value.toString();
+                  condition = value.toString();
                 },
               ),
             ],
@@ -527,7 +571,7 @@ class _AddPurchaseOrderState extends State<AddPurchaseOrder> {
         backgroundColor: Colors.blue,
         centerTitle: true,
         title: const Text(
-          'Add Purchase Order',
+          'Place New Order',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(

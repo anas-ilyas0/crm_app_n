@@ -1,43 +1,45 @@
 import 'package:flutter/material.dart';
 
-class QuickNotifications extends StatefulWidget {
-  const QuickNotifications({super.key});
+class Tags extends StatefulWidget {
+  const Tags({super.key});
 
   @override
-  State<QuickNotifications> createState() => _QuickNotificationsState();
+  State<Tags> createState() => _TagsState();
 }
 
-class _QuickNotificationsState extends State<QuickNotifications> {
+class _TagsState extends State<Tags> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.blue,
-            centerTitle: true,
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            title: const Text(
-              'Quick Notifications',
-              style: TextStyle(color: Colors.white),
-            ),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/addQuickNotification');
-                  },
-                  icon: const Icon(
-                    Icons.add_circle_rounded,
-                    color: Colors.white,
-                  ))
-            ]),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          backgroundColor: Colors.blue,
+          centerTitle: true,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: const Text(
+            'Tags',
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/addTag');
+                },
+                icon: const Icon(
+                  Icons.add_circle_rounded,
+                  color: Colors.white,
+                ))
+          ],
+          // bottom: const TabBar(
+        ),
+        body: Center(
           child: Column(children: [
+            const SizedBox(height: 10),
             Expanded(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
@@ -46,28 +48,22 @@ class _QuickNotificationsState extends State<QuickNotifications> {
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
                         columns: const [
-                          DataColumn(label: Text('Text')),
-                          DataColumn(label: Text('Link')),
-                          DataColumn(label: Text('Users')),
+                          DataColumn(label: Text('Tag')),
+                          DataColumn(label: Text('Slug')),
                           DataColumn(label: Text('Actions')),
                         ],
                         rows: List<DataRow>.generate(
-                          8,
+                          7,
                           (index) {
                             return DataRow(cells: [
                               const DataCell(
                                 Center(
-                                  child: Text('Client Accepted'),
+                                  child: Text('News'),
                                 ),
                               ),
                               const DataCell(
                                 Center(
-                                  child: Text('http://phpstack.com'),
-                                ),
-                              ),
-                              const DataCell(
-                                Center(
-                                  child: Text('Admin'),
+                                  child: Text('News-Tag'),
                                 ),
                               ),
                               DataCell(Center(
@@ -75,11 +71,11 @@ class _QuickNotificationsState extends State<QuickNotifications> {
                                     itemBuilder: (context) => [
                                           PopupMenuItem(
                                               value: 1,
-                                              child: const Text('View'),
+                                              child: const Text('Edit'),
                                               onTap: () {}),
                                           PopupMenuItem(
                                             value: 2,
-                                            child: const Text('Edit'),
+                                            child: const Text('View'),
                                             onTap: () {},
                                           ),
                                           PopupMenuItem(

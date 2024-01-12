@@ -16,7 +16,7 @@ class _ContentManagementState extends State<ContentManagement> {
         centerTitle: true,
         backgroundColor: Colors.blue,
         title: const Text(
-          'Sales',
+          'Content Management',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -34,20 +34,25 @@ class _ContentManagementState extends State<ContentManagement> {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 1.4),
-              children: const [
-                GridTileofApp(
-                    image: 'images/categories.png',
-                    firstText: 'Categories',
-                    secondText: ''),
-                GridTileofApp(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/categories');
+                  },
+                  child: const GridTileofApp(
+                      image: 'images/categories.png',
+                      firstText: 'Categories',
+                      secondText: ''),
+                ),
+                const GridTileofApp(
                     image: 'images/tags.png',
                     firstText: 'Tags',
                     secondText: ''),
-                GridTileofApp(
+                const GridTileofApp(
                     image: 'images/pages.png',
                     firstText: 'Pages',
                     secondText: ''),
-                GridTileofApp(
+                const GridTileofApp(
                     image: 'images/articles.png',
                     firstText: 'Articles',
                     secondText: ''),

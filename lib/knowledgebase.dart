@@ -45,7 +45,7 @@ class _KnowledgebaseState extends State<Knowledgebase> {
                     secondText: ''),
                 GridTileofApp(
                     image: 'images/categories.png',
-                    firstText: 'Categories',
+                    firstText: 'Category',
                     secondText: ''),
               ]),
         ),

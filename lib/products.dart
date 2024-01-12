@@ -110,10 +110,7 @@ class _ProductsState extends State<Products> {
                                           PopupMenuItem(
                                             value: 2,
                                             child: const Text('View'),
-                                            onTap: () {
-                                              Navigator.pushNamed(context,
-                                                  '/viewRecurringInvoices');
-                                            },
+                                            onTap: () {},
                                           ),
                                           PopupMenuItem(
                                             value: 3,

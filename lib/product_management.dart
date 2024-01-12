@@ -36,13 +36,29 @@ class _ProductManagementState extends State<ProductManagement> {
                   crossAxisCount: 2, childAspectRatio: 1.4),
               children: const [
                 GridTileofApp(
+                    image: 'images/businessList.png',
+                    firstText: 'Business',
+                    secondText: 'List'),
+                GridTileofApp(
                     image: 'images/products.png',
                     firstText: 'All',
                     secondText: 'Products'),
                 GridTileofApp(
+                    image: 'images/categories.png',
+                    firstText: 'Categories',
+                    secondText: ''),
+                GridTileofApp(
                     image: 'images/productsTransfer.png',
                     firstText: 'Products',
                     secondText: 'Transfer'),
+                GridTileofApp(
+                    image: 'images/brands.png',
+                    firstText: 'Brands',
+                    secondText: ''),
+                GridTileofApp(
+                    image: 'images/measurementUnits.png',
+                    firstText: 'Measurement',
+                    secondText: 'Units'),
                 GridTileofApp(
                     image: 'images/warehouse.png',
                     firstText: 'Warehouses',

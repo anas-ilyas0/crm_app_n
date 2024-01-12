@@ -16,7 +16,7 @@ class _AccountingState extends State<Accounting> {
         centerTitle: true,
         backgroundColor: Colors.blue,
         title: const Text(
-          'Sales',
+          'Accounting',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(

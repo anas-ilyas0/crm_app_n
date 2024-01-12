@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CartOrders extends StatefulWidget {
-  const CartOrders({super.key});
+class Tasks extends StatefulWidget {
+  const Tasks({super.key});
 
   @override
-  State<CartOrders> createState() => _CartOrdersState();
+  State<Tasks> createState() => _TasksState();
 }
 
-class _CartOrdersState extends State<CartOrders> {
+class _TasksState extends State<Tasks> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -24,13 +24,13 @@ class _CartOrdersState extends State<CartOrders> {
                 },
               ),
               title: const Text(
-                'Cart Orders',
+                'Tasks',
                 style: TextStyle(color: Colors.white),
               ),
               actions: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/place');
+                      Navigator.pushNamed(context, '/addTask');
                     },
                     icon: const Icon(
                       Icons.add_circle_rounded,
@@ -67,26 +67,26 @@ class _CartOrdersState extends State<CartOrders> {
                           Padding(
                               padding: const EdgeInsets.all(14.0),
                               child: Text(
-                                'Orders Summary',
+                                'Tasks Summary',
                                 style: Theme.of(context).textTheme.titleLarge,
                               )),
                           ListTile(
-                            title: const Text('Total Orders Amount'),
-                            trailing: const Text('\$10'),
+                            title: const Text('Total Tasks'),
+                            trailing: const Text('10'),
                             onTap: () {},
                           ),
                           ListTile(
-                            title: const Text('Active Orders'),
+                            title: const Text('Open Tasks'),
                             trailing: const Text('20'),
                             onTap: () {},
                           ),
                           ListTile(
-                            title: const Text('Pending Orders'),
+                            title: const Text('In Progress'),
                             trailing: const Text('30'),
                             onTap: () {},
                           ),
                           ListTile(
-                            title: const Text('Cancelled Orders'),
+                            title: const Text('Completed'),
                             trailing: const Text('40'),
                             onTap: () {},
                           ),
@@ -105,11 +105,12 @@ class _CartOrdersState extends State<CartOrders> {
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
                           columns: const [
-                            DataColumn(label: Text('ID')),
-                            DataColumn(label: Text('Customer')),
+                            DataColumn(label: Text('Name')),
+                            DataColumn(label: Text('Description')),
                             DataColumn(label: Text('Status')),
-                            DataColumn(label: Text('Price')),
-                            DataColumn(label: Text('Billing cycle')),
+                            DataColumn(label: Text('Start date')),
+                            DataColumn(label: Text('Due date')),
+                            DataColumn(label: Text('Assigned to')),
                             DataColumn(label: Text('Actions')),
                           ],
                           rows: List<DataRow>.generate(
@@ -118,27 +119,32 @@ class _CartOrdersState extends State<CartOrders> {
                               return DataRow(cells: [
                                 const DataCell(
                                   Center(
-                                    child: Text('17'),
+                                    child: Text('Juel Rana'),
                                   ),
                                 ),
                                 const DataCell(
                                   Center(
-                                    child: Text('Domenic Weber'),
+                                    child: Text('2taerhevsdvQWV'),
                                   ),
                                 ),
                                 const DataCell(
                                   Center(
-                                    child: Text('Pending'),
+                                    child: Text('In Progress'),
                                   ),
                                 ),
                                 const DataCell(
                                   Center(
-                                    child: Text('\$467'),
+                                    child: Text('09-17-2020'),
                                   ),
                                 ),
                                 const DataCell(
                                   Center(
-                                    child: Text('One time'),
+                                    child: Text('09-17-2023'),
+                                  ),
+                                ),
+                                const DataCell(
+                                  Center(
+                                    child: Text('Isadore Schamberger'),
                                   ),
                                 ),
                                 DataCell(Center(
@@ -155,11 +161,6 @@ class _CartOrdersState extends State<CartOrders> {
                                             ),
                                             PopupMenuItem(
                                               value: 3,
-                                              child: const Text('Mark as'),
-                                              onTap: () {},
-                                            ),
-                                            PopupMenuItem(
-                                              value: 4,
                                               child: const Text('Delete'),
                                               onTap: () {},
                                             )
