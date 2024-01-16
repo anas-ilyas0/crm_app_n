@@ -6,14 +6,14 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class AddProduct extends StatefulWidget {
-  const AddProduct({super.key});
+class EditProduct extends StatefulWidget {
+  const EditProduct({super.key});
 
   @override
-  State<AddProduct> createState() => _AddProductState();
+  State<EditProduct> createState() => _EditProductState();
 }
 
-class _AddProductState extends State<AddProduct> {
+class _EditProductState extends State<EditProduct> {
   File? selectedImage1;
   File? selectedImage2;
   File? selectedImage3;

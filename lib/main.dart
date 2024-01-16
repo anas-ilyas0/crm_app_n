@@ -1,3 +1,11 @@
+import 'package:crm_new/addGoal.dart';
+import 'package:crm_new/add_goal_type.dart';
+import 'package:crm_new/add_plugin.dart';
+import 'package:crm_new/add_ticket.dart';
+import 'package:crm_new/add_todo.dart';
+import 'package:crm_new/all_goals.dart';
+import 'package:crm_new/edit_product.dart';
+import 'package:crm_new/goal_type.dart';
 import 'package:crm_new/ui/screens/accounting.dart';
 import 'package:crm_new/ui/screens/accounts.dart';
 import 'package:crm_new/addProject.dart';
@@ -135,6 +143,7 @@ class MyApp extends StatelessWidget {
         '/addRecurringPeriod': (context) => const AddRecurringPeriod(),
         '/viewRecurringPeriod': (context) => const ViewRecurringPeriod(),
         '/product': (context) => const ProductManagement(),
+        '/editProduct': (context) => const EditProduct(),
         '/businessList': (context) => const BusinessList(),
         '/addBusinessList': (context) => const AddBusinessList(),
         '/products': (context) => const Products(),
@@ -203,10 +212,17 @@ class MyApp extends StatelessWidget {
         '/addCategoryy': (context) => const AddCategoryy(),
         '/global': (context) => const GlobalSettings(),
         '/plugins': (context) => const Plugins(),
+        '/addPlugin': (context) => const AddPlugin(),
         '/messages': (context) => const Messages(),
         '/todo': (context) => const Todo(),
+        '/addTodo': (context) => const AddTodo(),
         '/goals': (context) => const Goals(),
+        '/allGoals': (context) => const AllGoals(),
+        '/addGoal': (context) => const AddGoal(),
+        '/goalType': (context) => const GoalType(),
+        '/addGoalType': (context) => const AddGoalType(),
         '/ticket': (context) => const Ticket(),
+        '/addTicket': (context) => const AddTicket(),
         '/allLeads': (context) => const AllLeads(),
         '/create': (context) => const CreateLead(),
         '/view': (context) => const ViewLead(),

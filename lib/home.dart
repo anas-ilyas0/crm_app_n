@@ -311,6 +311,12 @@ class GridTileofApp extends StatelessWidget {
         if (firstText == 'Goals') {
           Navigator.pushNamed(context, '/goals');
         }
+        if (firstText == 'All' && secondText == 'Goals') {
+          Navigator.pushNamed(context, '/allGoals');
+        }
+        if (firstText == 'Goal' && secondText == 'Type') {
+          Navigator.pushNamed(context, '/goalType');
+        }
         if (firstText == 'Ticket') {
           Navigator.pushNamed(context, '/ticket');
         }
@@ -352,9 +358,6 @@ class GridTileofApp extends StatelessWidget {
         }
         if (firstText == 'Category') {
           Navigator.pushNamed(context, '/categoriess');
-        }
-        if (firstText == 'Plugins') {
-          Navigator.pushNamed(context, '/plugins');
         }
         if (firstText == 'Contacts' && secondText == 'Management') {
           Navigator.pushNamed(context, '/contact');
