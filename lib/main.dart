@@ -1,11 +1,28 @@
+import 'package:crm_new/addCurrency.dart';
+import 'package:crm_new/addDashboardWidget.dart';
+import 'package:crm_new/addDiscount.dart';
+import 'package:crm_new/addDynamicOption.dart';
+import 'package:crm_new/addEmailTemplate.dart';
 import 'package:crm_new/addGoal.dart';
+import 'package:crm_new/addLanguage.dart';
+import 'package:crm_new/addMasterSetting.dart';
+import 'package:crm_new/addTax.dart';
 import 'package:crm_new/add_goal_type.dart';
 import 'package:crm_new/add_plugin.dart';
 import 'package:crm_new/add_ticket.dart';
 import 'package:crm_new/add_todo.dart';
 import 'package:crm_new/all_goals.dart';
+import 'package:crm_new/currencies.dart';
+import 'package:crm_new/dashboard_widgets.dart';
+import 'package:crm_new/discounts.dart';
+import 'package:crm_new/dynamic_options.dart';
 import 'package:crm_new/edit_product.dart';
+import 'package:crm_new/emailTemplates.dart';
 import 'package:crm_new/goal_type.dart';
+import 'package:crm_new/languages.dart';
+import 'package:crm_new/masterSettings.dart';
+import 'package:crm_new/paymentGateways.dart';
+import 'package:crm_new/taxes.dart';
 import 'package:crm_new/ui/screens/accounting.dart';
 import 'package:crm_new/ui/screens/accounts.dart';
 import 'package:crm_new/addProject.dart';
@@ -211,6 +228,23 @@ class MyApp extends StatelessWidget {
         '/categoriess': (context) => const Categoriess(),
         '/addCategoryy': (context) => const AddCategoryy(),
         '/global': (context) => const GlobalSettings(),
+        '/dashboardWidgets': (context) => const DashboardWidgets(),
+        '/addDashboardWidget': (context) => const AddDashboardWidget(),
+        '/dynamicOptions': (context) => const DynamicOptions(),
+        '/addDynamicOption': (context) => const AddDynamicOption(),
+        '/currencies': (context) => const Currencies(),
+        '/addCurrency': (context) => const AddCurrency(),
+        '/emailTemplates': (context) => const EmailTemplates(),
+        '/addEmailTemplate': (context) => const AddEmailTemplate(),
+        '/paymentGateways': (context) => const PaymentGateways(),
+        '/taxes': (context) => const Taxes(),
+        '/addTax': (context) => const AddTax(),
+        '/discounts': (context) => const Discounts(),
+        '/addDiscount': (context) => const AddDiscount(),
+        '/languages': (context) => const Languages(),
+        '/addLanguage': (context) => const AddLanguage(),
+        '/masterSettings': (context) => const MasterSettings(),
+        '/addMasterSetting': (context) => const AddMasterSetting(),
         '/plugins': (context) => const Plugins(),
         '/addPlugin': (context) => const AddPlugin(),
         '/messages': (context) => const Messages(),

@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
-
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -13,23 +12,18 @@ class AddProposal extends StatefulWidget {
 }
 
 class _AddProposalState extends State<AddProposal> {
+  String status = '';
+  List<String> statuses = ['Published', 'Draft'];
   String customer = '';
   List<String> customers = ['Anas', 'Ronak', 'Ali'];
+  String saleAgent = '';
+  List<String> saleAgents = ['Anas', 'Ronak', 'Ali'];
+  String businessList = '';
+  List<String> businessLists = ['Restaurents', 'News'];
   String condition = '';
   List<String> conditions = ['Yes', 'No'];
-  String tax = '';
-  List<String> taxes = [''];
-  String discount = '';
-  List<String> discounts = [''];
-  String taxFormat = '';
-  List<String> taxFormats = ['Tax After Product Tax', 'Tax Before Product Tax'];
-  String discountFormat = '';
-  List<String> discountFormats = [
-    'Discount After Product Tax',
-    'Discount Before Product Tax'
-  ];
-  String paymentTerm = '';
-  List<String> paymentTerms = ['Daily', 'Weekly', 'Monthly'];
+  String productType = '';
+  List<String> productTypes = ['Digital', 'Installment'];
   int currentStep = 0;
   List<Step> stepList() => [
         Step(
@@ -122,14 +116,31 @@ class _AddProposalState extends State<AddProposal> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const SizedBox(height: 25, child: Text('Title*')),
-                TextFormField(
-                  //controller: email,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
+                const SizedBox(height: 25, child: Text('Status')),
+                DropdownButtonFormField2<String>(
+                  isExpanded: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  hint: const Text('Please select',
+                      style: TextStyle(fontSize: 14)),
+                  items: statuses
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    status = value.toString();
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return ('Write a title');
+                      return ('Please select a sale agent');
                     }
                     return null;
                   },
@@ -144,7 +155,7 @@ class _AddProposalState extends State<AddProposal> {
                   ),
                   hint: const Text('Please select',
                       style: TextStyle(fontSize: 14)),
-                  items: customers
+                  items: saleAgents
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
                             child: Text(
@@ -156,7 +167,7 @@ class _AddProposalState extends State<AddProposal> {
                           ))
                       .toList(),
                   onChanged: (value) {
-                    customer = value.toString();
+                    saleAgent = value.toString();
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -189,9 +200,22 @@ class _AddProposalState extends State<AddProposal> {
                 decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
               const SizedBox(height: 20),
-              const SizedBox(
-                  height: 25,
-                  child: Text('Show delivery details in proposals')),
+              const SizedBox(height: 25, child: Text('Title')),
+              TextFormField(
+                  decoration:
+                      const InputDecoration(border: OutlineInputBorder())),
+              const SizedBox(height: 20),
+              const SizedBox(height: 25, child: Text('Reference')),
+              TextFormField(
+                  decoration:
+                      const InputDecoration(border: OutlineInputBorder())),
+              const SizedBox(height: 20),
+              const SizedBox(height: 25, child: Text('Proposal date')),
+              TextFormField(
+                decoration: const InputDecoration(border: OutlineInputBorder()),
+              ),
+              const SizedBox(height: 20),
+              const SizedBox(height: 25, child: Text('Related Business List')),
               DropdownButtonFormField2<String>(
                 isExpanded: true,
                 decoration: const InputDecoration(
@@ -199,7 +223,7 @@ class _AddProposalState extends State<AddProposal> {
                 ),
                 hint:
                     const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: conditions
+                items: businessLists
                     .map((item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
@@ -211,26 +235,9 @@ class _AddProposalState extends State<AddProposal> {
                         ))
                     .toList(),
                 onChanged: (value) {
-                  condition = value.toString();
+                  businessList = value.toString();
                 },
               ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Status')),
-              TextFormField(
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder())),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Proposal #')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Reference')),
-              TextFormField(
-                //controller: city,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 15),
             ],
           ),
         ),
@@ -241,21 +248,6 @@ class _AddProposalState extends State<AddProposal> {
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 25, child: Text('Related Business List')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Proposal date')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Proposal expiry date')),
-              TextFormField(
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-              ),
-              const SizedBox(height: 10),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: DataTable(
@@ -263,17 +255,17 @@ class _AddProposalState extends State<AddProposal> {
                       DataColumn(label: Text('Item name')),
                       DataColumn(
                           label: Padding(
-                        padding: EdgeInsets.only(left: 47),
+                        padding: EdgeInsets.only(left: 35),
                         child: Text('Quantity'),
                       )),
                       DataColumn(
                           label: Padding(
-                        padding: EdgeInsets.only(left: 17),
+                        padding: EdgeInsets.only(left: 2),
                         child: Text('Rate'),
                       )),
+                      DataColumn(label: Text('Product type')),
                       DataColumn(label: Text('Tax(%)')),
                       DataColumn(label: Text('Tax')),
-                      DataColumn(label: Text('Max discount')),
                       DataColumn(label: Text('Discount(%)')),
                       DataColumn(label: Text('Discount')),
                       DataColumn(label: Text('Commision')),
@@ -281,7 +273,7 @@ class _AddProposalState extends State<AddProposal> {
                       DataColumn(label: Text('Action')),
                     ],
                     rows: List<DataRow>.generate(
-                      8,
+                      1,
                       (index) {
                         return DataRow(cells: [
                           const DataCell(
@@ -297,7 +289,15 @@ class _AddProposalState extends State<AddProposal> {
                                       onPressed: () {},
                                       icon: const Icon(Icons.remove_circle),
                                       iconSize: 17),
-                                  const Text('Quantity'),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 5),
+                                      child: TextFormField(
+                                        decoration: const InputDecoration(
+                                            border: OutlineInputBorder()),
+                                      ),
+                                    ),
+                                  ),
                                   IconButton(
                                       onPressed: () {},
                                       icon: const Icon(Icons.add_circle),
@@ -306,16 +306,58 @@ class _AddProposalState extends State<AddProposal> {
                               ),
                             ),
                           ),
-                          const DataCell(
-                            Center(
-                              child: Text('Developer'),
+                          DataCell(
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder()),
+                                ),
+                              ),
                             ),
                           ),
-                          const DataCell(
-                            Center(
-                              child: Text('Ali'),
-                            ),
-                          ),
+                          DataCell(DropdownButton(
+                            hint: const Text('Please select',
+                                style: TextStyle(fontSize: 14)),
+                            items: productTypes
+                                .map((item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ))
+                                .toList(),
+                            onChanged: (value) {
+                              productType = value.toString();
+                            },
+                          )
+                              // DropdownButtonFormField2<String>(
+                              //   isExpanded: true,
+                              //   decoration: const InputDecoration(
+                              //     border: OutlineInputBorder(),
+                              //   ),
+                              //   hint: const Text('Please select',
+                              //       style: TextStyle(fontSize: 14)),
+                              //   items: productTypes
+                              //       .map((item) => DropdownMenuItem<String>(
+                              //             value: item,
+                              //             child: Text(
+                              //               item,
+                              //               style: const TextStyle(
+                              //                 fontSize: 14,
+                              //               ),
+                              //             ),
+                              //           ))
+                              //       .toList(),
+                              //   onChanged: (value) {
+                              //     productType = value.toString();
+                              //   },
+                              // ),
+                              ),
                           const DataCell(
                             Center(
                               child: Text('25'),
@@ -323,7 +365,7 @@ class _AddProposalState extends State<AddProposal> {
                           ),
                           const DataCell(
                             Center(
-                              child: Text('Backend'),
+                              child: Text('25'),
                             ),
                           ),
                           const DataCell(
@@ -357,33 +399,8 @@ class _AddProposalState extends State<AddProposal> {
                       },
                     )),
               ),
-            ],
-          ),
-        ),
-        Step(
-          isActive: currentStep >= 3,
-          state: currentStep <= 3 ? StepState.editing : StepState.complete,
-          title: const Text(''),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                  height: 25, child: Text('Enter Product Information')),
-              TextFormField(
-                decoration: const InputDecoration(
-                    hintText: 'Enter product description',
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
-                    border: OutlineInputBorder()),
-              ),
               const SizedBox(height: 30),
-              Container(
-                height: 280,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
+              Card(
                 child: Column(children: [
                   Padding(
                       padding: const EdgeInsets.all(14.0),
@@ -391,11 +408,11 @@ class _AddProposalState extends State<AddProposal> {
                         'Total Bill',
                         style: Theme.of(context).textTheme.titleLarge,
                       )),
-                  // ListTile(
-                  // title: const Text('Total  Salesman Commission'),
-                  // trailing: const Text('10'),
-                  // onTap: () {},
-                  // ),
+                  ListTile(
+                    title: const Text('Total  Salesman Commission'),
+                    trailing: const Text('10'),
+                    onTap: () {},
+                  ),
                   ListTile(
                     title: const Text('Total tax'),
                     trailing: const Text('20'),
@@ -422,139 +439,19 @@ class _AddProposalState extends State<AddProposal> {
           ),
         ),
         Step(
-          isActive: currentStep >= 4,
-          state: currentStep <= 4 ? StepState.editing : StepState.complete,
+          isActive: currentStep >= 3,
+          state: currentStep <= 3 ? StepState.editing : StepState.complete,
           title: const Text(''),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 25, child: Text('Tax')),
-              DropdownButtonFormField2<String>(
-                isExpanded: true,
+              const SizedBox(
+                  height: 25, child: Text('Enter Product Information')),
+              TextFormField(
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-                hint:
-                    const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: taxes
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  tax = value.toString();
-                },
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Tax format')),
-              DropdownButtonFormField2<String>(
-                isExpanded: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-                hint:
-                    const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: taxFormats
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  taxFormat = value.toString();
-                },
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Discount')),
-              DropdownButtonFormField2<String>(
-                isExpanded: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-                hint:
-                    const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: discounts
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  discount = value.toString();
-                },
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Discount format')),
-              DropdownButtonFormField2<String>(
-                isExpanded: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-                hint:
-                    const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: discountFormats
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  discountFormat = value.toString();
-                },
-              ),
-            ],
-          ),
-        ),
-        Step(
-          isActive: currentStep >= 5,
-          state: currentStep <= 5 ? StepState.editing : StepState.complete,
-          title: const Text(''),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 25, child: Text('Payment terms')),
-              DropdownButtonFormField2<String>(
-                isExpanded: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-                hint:
-                    const Text('Please select', style: TextStyle(fontSize: 14)),
-                items: paymentTerms
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  paymentTerm = value.toString();
-                },
+                    hintText: 'Enter product description',
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                    border: OutlineInputBorder()),
               ),
               const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('Show product details')),
@@ -631,12 +528,12 @@ class _AddProposalState extends State<AddProposal> {
                                     backgroundColor: Colors.indigo),
                                 onPressed: details.onStepContinue,
                                 child: Text(
-                                  currentStep == 5 ? 'Save' : 'Next',
+                                  currentStep == 3 ? 'Save' : 'Next',
                                   style: const TextStyle(color: Colors.white),
                                 )),
                           ],
                         ),
-                        // if (currentStep == 5)
+                        // if (currentStep == 3)
                         // ElevatedButton(
                         // style: ElevatedButton.styleFrom(
                         // backgroundColor: Colors.indigo,
@@ -666,7 +563,7 @@ class _AddProposalState extends State<AddProposal> {
                     currentStep += 1;
                     setState(() {
                       //String fullName = '${firstName.text}  ${lastName.text}';
-                      if (currentStep == 6) {
+                      if (currentStep == 3) {
                         // dataProvider.changeData(
                         // newName: fullName,
                         // newEmail: email.text,

@@ -158,7 +158,7 @@ class GridTileofApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (firstText == 'Dashboard') {
+        if (firstText == 'Dashboard' && secondText == '') {
           Navigator.pushNamed(context, '/dashboard');
         }
         if (firstText == 'Leads') {
@@ -298,6 +298,42 @@ class GridTileofApp extends StatelessWidget {
         }
         if (firstText == 'Global') {
           Navigator.pushNamed(context, '/global');
+        }
+        if (firstText == 'Dashboard' && secondText == 'Widgets') {
+          Navigator.pushNamed(context, '/dashboardWidgets');
+        }
+        if (firstText == 'Dynamic' && secondText == 'Options') {
+          Navigator.pushNamed(context, '/dynamicOptions');
+        }
+        if (firstText == 'Currencies' && secondText == '') {
+          Navigator.pushNamed(context, '/currencies');
+        }
+        if (firstText == 'Email' && secondText == 'Templates') {
+          Navigator.pushNamed(context, '/emailTemplates');
+        }
+        if (firstText == 'Payment' && secondText == 'Gateways') {
+          Navigator.pushNamed(context, '/paymentGateways');
+        }
+        if (firstText == 'Taxes' && secondText == '') {
+          Navigator.pushNamed(context, '/taxes');
+        }
+        if (firstText == 'Discounts' && secondText == '') {
+          Navigator.pushNamed(context, '/discounts');
+        }
+        if (firstText == 'Translations' && secondText == '') {
+          Navigator.pushNamed(context, '/translations');
+        }
+        if (firstText == 'Languages' && secondText == '') {
+          Navigator.pushNamed(context, '/languages');
+        }
+        if (firstText == 'Database' && secondText == 'Backup') {
+          Navigator.pushNamed(context, '/databaseBackup');
+        }
+        if (firstText == 'Site' && secondText == 'Themes') {
+          Navigator.pushNamed(context, '/siteThemes');
+        }
+        if (firstText == 'Master' && secondText == 'Settings') {
+          Navigator.pushNamed(context, '/masterSettings');
         }
         if (firstText == 'Plugins') {
           Navigator.pushNamed(context, '/plugins');

@@ -17,7 +17,8 @@ Future<List<Data>> getProducts() async {
       print('Successfully Fetched Data');
       return getProducts.data;
     } else {
-      print('Error: ${response.reasonPhrase}');
+      print(
+          'Error: (statusCode ${response.statusCode}, reasonPhrase: ${response.reasonPhrase})');
       return [];
     }
   } catch (e) {

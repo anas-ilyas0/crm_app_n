@@ -64,13 +64,13 @@ class _AddBusinessListState extends State<AddBusinessList> {
                             if (res.statusCode == 200) {
                               print('Business Registered');
                               if (!mounted) return;
+                              Navigator.pop(context);
+                              Navigator.pushReplacementNamed(
+                                  context, '/businessList');
                             } else {
                               print('Something went wrong : ${res.statusCode}');
                             }
                           }
-                          Navigator.pop(context);
-                          Navigator.pushReplacementNamed(
-                              context, '/businessList');
                         },
                         child: const Text(
                           'Save',

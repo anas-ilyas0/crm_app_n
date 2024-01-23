@@ -1,21 +1,24 @@
 // ignore_for_file: file_names, avoid_print
 
 import 'dart:io';
-import 'package:crm_new/helpers/categoriesPostApi.dart';
+import 'package:crm_new/helpers/categoriesEditApi.dart';
+import 'package:crm_new/models/categories_get_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class AddCategory extends StatefulWidget {
-  const AddCategory({super.key});
+class EditCategory extends StatefulWidget {
+  final Data categoryData; // Assuming 'Data' is your model class
+
+  const EditCategory({Key? key, required this.categoryData}) : super(key: key);
+  //const EditCategory({super.key});
 
   @override
-  State<AddCategory> createState() => _AddCategoryState();
+  State<EditCategory> createState() => _EditCategoryState();
 }
 
-class _AddCategoryState extends State<AddCategory> {
-  TextEditingController categoryName = TextEditingController();
+class _EditCategoryState extends State<EditCategory> {
   File? selectedImage;
   Future pickImageFromGallery() async {
     final returnedImage =
@@ -29,6 +32,8 @@ class _AddCategoryState extends State<AddCategory> {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController editCategoryController =
+        TextEditingController(text: widget.categoryData.name);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -41,7 +46,7 @@ class _AddCategoryState extends State<AddCategory> {
           },
         ),
         title: const Text(
-          'Add Category',
+          'Edit Category',
           style: TextStyle(color: Colors.white),
         ),
         // bottom: const TabBar(
@@ -57,7 +62,7 @@ class _AddCategoryState extends State<AddCategory> {
                 const SizedBox(height: 15),
                 const SizedBox(height: 25, child: Text('Category*')),
                 TextFormField(
-                  controller: categoryName,
+                  controller: editCategoryController,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                   validator: (value) {
@@ -121,7 +126,8 @@ class _AddCategoryState extends State<AddCategory> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             //var res =
-                            await sendPostCategory(categoryName.text);
+                            await updateCategory(widget.categoryData.id,
+                                editCategoryController.text);
                             //if (res.statusCode == 201) {
                             print('Category Registered');
                             if (!mounted) return;
@@ -134,7 +140,7 @@ class _AddCategoryState extends State<AddCategory> {
                           }
                         },
                         child: const Text(
-                          'Save',
+                          'Update',
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         )))
               ],

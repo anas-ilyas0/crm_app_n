@@ -4,16 +4,21 @@ import 'package:crm_new/helpers/businessEditApi.dart';
 import 'package:crm_new/models/business_get_model.dart';
 import 'package:flutter/material.dart';
 
-class EditBusinessList extends StatelessWidget {
+class EditBusinessList extends StatefulWidget {
   final Data businessData; // Assuming 'Data' is your model class
 
   const EditBusinessList({Key? key, required this.businessData})
       : super(key: key);
 
   @override
+  State<EditBusinessList> createState() => _EditBusinessListState();
+}
+
+class _EditBusinessListState extends State<EditBusinessList> {
+  @override
   Widget build(BuildContext context) {
     final TextEditingController editNameController =
-        TextEditingController(text: businessData.businessName);
+        TextEditingController(text: widget.businessData.businessName);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,9 +57,9 @@ class EditBusinessList extends StatelessWidget {
                 ),
                 onPressed: () async {
                   print(
-                      'businessData.id : ${businessData.id}  >>> editNameController.text : ${editNameController.text}');
+                      'businessData.id : ${widget.businessData.id}  >>> editNameController.text : ${editNameController.text}');
                   var res = await updateBusiness(
-                      businessData.id, editNameController.text);
+                      widget.businessData.id, editNameController.text);
 
                   log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
 

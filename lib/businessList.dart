@@ -142,6 +142,8 @@ class _BusinessListState extends State<BusinessList> {
                                           data.id,
                                         );
                                         log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
+                                        // Navigator.pushReplacementNamed(
+                                        //     context, '/businessList');
                                         setState(() {
                                           futureData = getBusinessData();
                                         });
