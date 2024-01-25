@@ -1,25 +1,31 @@
 // ignore_for_file: file_names, avoid_print
-import 'package:crm_new/helpers/discountPostApi.dart';
+import 'package:crm_new/helpers/taxEditApi.dart';
+import 'package:crm_new/models/tax_get_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class AddDiscount extends StatefulWidget {
-  const AddDiscount({super.key});
+class EditTax extends StatefulWidget {
+  final Data taxesData; // Assuming 'Data' is your model class
+
+  const EditTax({Key? key, required this.taxesData}) : super(key: key);
 
   @override
-  State<AddDiscount> createState() => _AddDiscountState();
+  State<EditTax> createState() => _EditTaxState();
 }
 
-class _AddDiscountState extends State<AddDiscount> {
-  TextEditingController discountNameController = TextEditingController();
-  TextEditingController discountController = TextEditingController();
-  TextEditingController discountTypeController = TextEditingController();
-  String discountType = '';
-  List<String> discountTypes = ['Value', 'Percent'];
+class _EditTaxState extends State<EditTax> {
+  String rateType = '';
+  List<String> rateTypes = ['Value', 'Percent'];
   @override
   Widget build(BuildContext context) {
+    TextEditingController editTaxController =
+        TextEditingController(text: widget.taxesData.name);
+    TextEditingController editRateController =
+        TextEditingController(text: widget.taxesData.rate.toString());
+    TextEditingController editRateTypeController =
+        TextEditingController(text: widget.taxesData.rateType);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -32,7 +38,7 @@ class _AddDiscountState extends State<AddDiscount> {
           },
         ),
         title: const Text(
-          'Add Discount',
+          'Edit Tax',
           style: TextStyle(color: Colors.white),
         ),
         // bottom: const TabBar(
@@ -48,7 +54,7 @@ class _AddDiscountState extends State<AddDiscount> {
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Name*')),
                 TextFormField(
-                  controller: discountNameController,
+                  controller: editTaxController,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                   validator: (value) {
@@ -60,30 +66,30 @@ class _AddDiscountState extends State<AddDiscount> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 20),
-                const SizedBox(height: 25, child: Text('Discount*')),
+                const SizedBox(height: 25, child: Text('Rate*')),
                 TextFormField(
-                  controller: discountController,
+                  controller: editRateController,
                   keyboardType: TextInputType.number,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return ('Please enter discount');
+                      return ('Please enter rate');
                     }
                     return null;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 20),
-                const SizedBox(height: 25, child: Text('Discount type')),
+                const SizedBox(height: 25, child: Text('Rate type')),
                 DropdownButtonFormField2<String>(
                   isExpanded: true,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
-                  hint: const Text('Please select',
-                      style: TextStyle(fontSize: 14)),
-                  items: discountTypes
+                  hint: Text(editRateTypeController.text,
+                      style: const TextStyle(fontSize: 14)),
+                  items: rateTypes
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
                             child: Text(
@@ -95,8 +101,8 @@ class _AddDiscountState extends State<AddDiscount> {
                           ))
                       .toList(),
                   onChanged: (value) {
-                    discountType = value.toString();
-                    discountTypeController.text = discountType;
+                    rateType = value.toString();
+                    editRateTypeController.text = rateType;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -112,23 +118,23 @@ class _AddDiscountState extends State<AddDiscount> {
                             backgroundColor: Colors.blue),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            var res = await discountPostRequest(
-                                discountNameController.text,
-                                discountController.text,
-                                discountTypeController.text);
+                            var res = await updateTax(
+                                widget.taxesData.id,
+                                editTaxController.text,
+                                editRateController.text,
+                                editRateTypeController.text);
                             if (res.statusCode == 200) {
-                              print('Discount Registered');
+                              print('Tax Updated');
                               if (!mounted) return;
                               Navigator.pop(context);
-                              Navigator.pushReplacementNamed(
-                                  context, '/discounts');
+                              Navigator.pushReplacementNamed(context, '/taxes');
                             } else {
                               print('Something went wrong : ${res.statusCode}');
                             }
                           }
                         },
                         child: const Text(
-                          'Save',
+                          'Update',
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         )))
               ],

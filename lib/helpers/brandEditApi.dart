@@ -2,7 +2,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<http.Response> updateBusiness(int id, String newName) async {
+Future<http.Response> updateBrand(
+    int id, String newTitleName, String status) async {
   var headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
@@ -11,9 +12,13 @@ Future<http.Response> updateBusiness(int id, String newName) async {
   };
 
   var request = http.Request('POST',
-      Uri.parse('https://testcrm.thesuperstarshop.com/api/v1/business-edit'));
-  request.body =
-      json.encode({"created_by": id, 'id': id, "business_name": newName});
+      Uri.parse('https://testcrm.thesuperstarshop.com/api/v1/update-brand'));
+  request.body = json.encode({
+    "created_by": id,
+    'id': id,
+    "title": newTitleName,
+    "status": status,
+  });
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();

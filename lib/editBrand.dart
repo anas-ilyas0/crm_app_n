@@ -1,31 +1,36 @@
 // ignore_for_file: file_names, avoid_print, unused_local_variable
-import 'package:crm_new/helpers/brandPostApi.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:crm_new/helpers/brandEditApi.dart';
+import 'package:crm_new/models/brands_get_model.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class AddBrand extends StatefulWidget {
-  const AddBrand({super.key});
+class EditBrand extends StatefulWidget {
+  final Data brandData; // Assuming 'Data' is your model class
+
+  const EditBrand({Key? key, required this.brandData}) : super(key: key);
 
   @override
-  State<AddBrand> createState() => _AddBrandState();
+  State<EditBrand> createState() => _EditBrandState();
 }
 
-class _AddBrandState extends State<AddBrand> {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController statusController = TextEditingController();
+class _EditBrandState extends State<EditBrand> {
   String status = '';
   List<String> statuses = ['Active', 'Inactive'];
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController editTitleController =
+        TextEditingController(text: widget.brandData.title);
+    final TextEditingController editStatusController =
+        TextEditingController(text: widget.brandData.status);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
         centerTitle: true,
         title: const Text(
-          'Add Brand',
+          'Edit Brand',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -44,18 +49,11 @@ class _AddBrandState extends State<AddBrand> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 30),
-                const SizedBox(height: 25, child: Text('Title*')),
+                const SizedBox(height: 25, child: Text('Title')),
                 TextFormField(
-                  controller: titleController,
+                  controller: editTitleController,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return ('Enter your brand title');
-                    }
-                    return null;
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Status')),
@@ -64,8 +62,8 @@ class _AddBrandState extends State<AddBrand> {
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                     ),
-                    hint: const Text('Choose a status',
-                        style: TextStyle(fontSize: 14)),
+                    hint: Text(editStatusController.text,
+                        style: const TextStyle(fontSize: 14)),
                     items: statuses
                         .map((item) => DropdownMenuItem<String>(
                               value: item,
@@ -78,8 +76,7 @@ class _AddBrandState extends State<AddBrand> {
                             ))
                         .toList(),
                     onChanged: (value) {
-                      status = value.toString();
-                      statusController.text = status;
+                      editStatusController.text = value.toString();
                     }),
                 const SizedBox(height: 25),
                 Center(
@@ -87,22 +84,23 @@ class _AddBrandState extends State<AddBrand> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue),
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            var res = await brandPostRequest(
-                                titleController.text, statusController.text);
-                            if (res.statusCode == 200) {
-                              print('Brand Registered');
-                              if (!mounted) return;
-                              Navigator.pop(context);
-                              Navigator.pushReplacementNamed(
-                                  context, '/brands');
-                            } else {
-                              print('Something went wrong : ${res.statusCode}');
-                            }
+                          //if (editTitleController.text.isNotEmpty) {
+                          var res = await updateBrand(
+                              widget.brandData.id,
+                              editTitleController.text,
+                              editStatusController.text);
+                          if (res.statusCode == 200) {
+                            print('Brand Updated');
+                            if (!mounted) return;
+                            Navigator.pop(context);
+                            Navigator.pushReplacementNamed(context, '/brands');
+                          } else {
+                            print('Something went wrong : ${res.statusCode}');
                           }
+                          //}
                         },
                         child: const Text(
-                          'Save',
+                          'Update',
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         )))
               ],

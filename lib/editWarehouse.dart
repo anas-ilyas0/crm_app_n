@@ -1,27 +1,31 @@
 // ignore_for_file: file_names, avoid_print
-import 'package:crm_new/helpers/warehousePostApi.dart';
+import 'package:crm_new/helpers/warehouseEditApi.dart';
+import 'package:crm_new/models/warehouses_get_model.dart';
 import 'package:flutter/material.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class AddWarehouse extends StatefulWidget {
-  const AddWarehouse({super.key});
+class EditWarehouse extends StatefulWidget {
+  final Data warehouseData; // Assuming 'Data' is your model class
+
+  const EditWarehouse({Key? key, required this.warehouseData})
+      : super(key: key);
 
   @override
-  State<AddWarehouse> createState() => _AddWarehouseState();
+  State<EditWarehouse> createState() => _EditWarehouseState();
 }
 
-class _AddWarehouseState extends State<AddWarehouse> {
-  TextEditingController warehouseController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+class _EditWarehouseState extends State<EditWarehouse> {
   @override
   Widget build(BuildContext context) {
+    final TextEditingController editWarehouseController =
+        TextEditingController(text: widget.warehouseData.name);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
         centerTitle: true,
         title: const Text(
-          'Add Warehouse',
+          'Edit WareHouse',
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -40,23 +44,15 @@ class _AddWarehouseState extends State<AddWarehouse> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 15),
-                const SizedBox(height: 25, child: Text('Name*')),
+                const SizedBox(height: 25, child: Text('Name')),
                 TextFormField(
-                  controller: warehouseController,
+                  controller: editWarehouseController,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return ('Write your warehouse name');
-                    }
-                    return null;
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Address')),
                 TextFormField(
-                  controller: addressController,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                 ),
@@ -74,11 +70,12 @@ class _AddWarehouseState extends State<AddWarehouse> {
                             backgroundColor: Colors.blue),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            var res = await warehousePostRequest(
-                                warehouseController.text,
-                                addressController.text);
+                            var res = await warehouseUpdateRequest(
+                              widget.warehouseData.id,
+                              editWarehouseController.text,
+                            );
                             if (res.statusCode == 200) {
-                              print('Warehouse Registered');
+                              print('Warehouse Updated');
                               if (!mounted) return;
                               Navigator.pop(context);
                               Navigator.pushReplacementNamed(
@@ -89,7 +86,7 @@ class _AddWarehouseState extends State<AddWarehouse> {
                           }
                         },
                         child: const Text(
-                          'Save',
+                          'Update',
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         )))
               ],

@@ -1,4 +1,5 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print
+import 'package:crm_new/helpers/taxPostApi.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,9 @@ class AddTax extends StatefulWidget {
 }
 
 class _AddTaxState extends State<AddTax> {
+  TextEditingController taxController = TextEditingController();
+  TextEditingController rateController = TextEditingController();
+  TextEditingController rateTypeController = TextEditingController();
   String rateType = '';
   List<String> rateTypes = ['Value', 'Percent'];
   @override
@@ -44,6 +48,7 @@ class _AddTaxState extends State<AddTax> {
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Name*')),
                 TextFormField(
+                  controller: taxController,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                   validator: (value) {
@@ -57,6 +62,7 @@ class _AddTaxState extends State<AddTax> {
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Rate*')),
                 TextFormField(
+                  controller: rateController,
                   keyboardType: TextInputType.number,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
@@ -90,6 +96,7 @@ class _AddTaxState extends State<AddTax> {
                       .toList(),
                   onChanged: (value) {
                     rateType = value.toString();
+                    rateTypeController.text = rateType;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -103,8 +110,22 @@ class _AddTaxState extends State<AddTax> {
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {}
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            var res = await taxPostRequest(
+                              taxController.text,
+                              rateController.text.toString(),
+                              rateType,
+                            );
+                            if (res.statusCode == 200) {
+                              print('Tax Registered');
+                              if (!mounted) return;
+                              Navigator.pop(context);
+                              Navigator.pushReplacementNamed(context, '/taxes');
+                            } else {
+                              print('Something went wrong : ${res.statusCode}');
+                            }
+                          }
                         },
                         child: const Text(
                           'Save',

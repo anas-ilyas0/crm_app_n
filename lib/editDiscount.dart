@@ -1,25 +1,31 @@
 // ignore_for_file: file_names, avoid_print
-import 'package:crm_new/helpers/discountPostApi.dart';
+import 'package:crm_new/helpers/discountEditApi.dart';
+import 'package:crm_new/models/discounts_get_model.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class AddDiscount extends StatefulWidget {
-  const AddDiscount({super.key});
+class EditDiscount extends StatefulWidget {
+  final Data discountsData; // Assuming 'Data' is your model class
+
+  const EditDiscount({Key? key, required this.discountsData}) : super(key: key);
 
   @override
-  State<AddDiscount> createState() => _AddDiscountState();
+  State<EditDiscount> createState() => _EditDiscountState();
 }
 
-class _AddDiscountState extends State<AddDiscount> {
-  TextEditingController discountNameController = TextEditingController();
-  TextEditingController discountController = TextEditingController();
-  TextEditingController discountTypeController = TextEditingController();
+class _EditDiscountState extends State<EditDiscount> {
   String discountType = '';
   List<String> discountTypes = ['Value', 'Percent'];
   @override
   Widget build(BuildContext context) {
+    TextEditingController editDiscountNameController =
+        TextEditingController(text: widget.discountsData.name);
+    TextEditingController editDiscountController =
+        TextEditingController(text: widget.discountsData.discount.toString());
+    TextEditingController editDiscountTypeController =
+        TextEditingController(text: widget.discountsData.discountType);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -32,7 +38,7 @@ class _AddDiscountState extends State<AddDiscount> {
           },
         ),
         title: const Text(
-          'Add Discount',
+          'Edit Discount',
           style: TextStyle(color: Colors.white),
         ),
         // bottom: const TabBar(
@@ -48,7 +54,7 @@ class _AddDiscountState extends State<AddDiscount> {
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Name*')),
                 TextFormField(
-                  controller: discountNameController,
+                  controller: editDiscountNameController,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                   validator: (value) {
@@ -62,7 +68,7 @@ class _AddDiscountState extends State<AddDiscount> {
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Discount*')),
                 TextFormField(
-                  controller: discountController,
+                  controller: editDiscountController,
                   keyboardType: TextInputType.number,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
@@ -81,8 +87,8 @@ class _AddDiscountState extends State<AddDiscount> {
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
-                  hint: const Text('Please select',
-                      style: TextStyle(fontSize: 14)),
+                  hint: Text(editDiscountTypeController.text,
+                      style: const TextStyle(fontSize: 14)),
                   items: discountTypes
                       .map((item) => DropdownMenuItem<String>(
                             value: item,
@@ -96,7 +102,7 @@ class _AddDiscountState extends State<AddDiscount> {
                       .toList(),
                   onChanged: (value) {
                     discountType = value.toString();
-                    discountTypeController.text = discountType;
+                    editDiscountTypeController.text = discountType;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -112,12 +118,13 @@ class _AddDiscountState extends State<AddDiscount> {
                             backgroundColor: Colors.blue),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            var res = await discountPostRequest(
-                                discountNameController.text,
-                                discountController.text,
-                                discountTypeController.text);
+                            var res = await updateDiscount(
+                                widget.discountsData.id,
+                                editDiscountNameController.text,
+                                editDiscountController.text,
+                                editDiscountTypeController.text);
                             if (res.statusCode == 200) {
-                              print('Discount Registered');
+                              print('Discount Updated');
                               if (!mounted) return;
                               Navigator.pop(context);
                               Navigator.pushReplacementNamed(
@@ -128,7 +135,7 @@ class _AddDiscountState extends State<AddDiscount> {
                           }
                         },
                         child: const Text(
-                          'Save',
+                          'Update',
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         )))
               ],
