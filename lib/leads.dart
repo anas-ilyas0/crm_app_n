@@ -1,9 +1,6 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 // ignore: must_be_immutable
 import 'dart:convert';
-import 'dart:developer';
-import 'package:crm_new/editLead.dart';
-import 'package:crm_new/helpers/leadDeleteApi.dart';
 import 'package:crm_new/models/leadsModel.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

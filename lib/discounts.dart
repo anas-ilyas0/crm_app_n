@@ -1,9 +1,6 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'dart:convert';
-import 'dart:developer';
-import 'package:crm_new/editDiscount.dart';
-import 'package:crm_new/helpers/discountDeleteApi.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:crm_new/models/discounts_get_model.dart';
