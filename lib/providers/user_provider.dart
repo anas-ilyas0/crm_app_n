@@ -1,12 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-class UserProvider extends ChangeNotifier {
+class UserProvider with ChangeNotifier {
   String name, email, address, contactType;
   String receivedData;
   File? image;
   bool dataAvailable = false;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   UserProvider({
     this.name = '',
@@ -16,6 +17,11 @@ class UserProvider extends ChangeNotifier {
     this.receivedData = '',
     this.image,
   });
+
+  void setLoading(bool loading) {
+    _isLoading = loading;
+    notifyListeners();
+  }
 
   void changeData({
     required String newName,

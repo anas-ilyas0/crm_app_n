@@ -22,6 +22,7 @@ import 'package:crm_new/goal_type.dart';
 import 'package:crm_new/languages.dart';
 import 'package:crm_new/masterSettings.dart';
 import 'package:crm_new/paymentGateways.dart';
+import 'package:crm_new/providers/user_provider.dart';
 import 'package:crm_new/taxes.dart';
 import 'package:crm_new/ui/screens/accounting.dart';
 import 'package:crm_new/ui/screens/accounts.dart';
@@ -142,7 +143,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthViewModel())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        )
+      ],
       child: MaterialApp(home: const Login(), routes: {
         '/login': (context) => const Login(),
         '/home': (context) => const Home(username: ''),

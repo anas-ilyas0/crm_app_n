@@ -1,7 +1,10 @@
 // ignore_for_file: avoid_print, avoid_unnecessary_containers, use_build_context_synchronously
+import 'package:crm_new/helpers/loginPostApi.dart';
 import 'package:crm_new/home.dart';
+import 'package:crm_new/providers/user_provider.dart';
 import 'package:crm_new/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -13,7 +16,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool isLoading = false;
   bool? isChecked = false;
   bool passwordVisible = false;
   TextEditingController email = TextEditingController();
@@ -21,8 +23,29 @@ class _LoginState extends State<Login> {
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
 
+  void login() async {
+    final loginState = Provider.of<UserProvider>(context, listen: false);
+    loginState.setLoading(true);
+    String enteredEmail = email.text;
+    var res = await performLogin(email.text, password.text);
+    if (res.statusCode == 200) {
+      print('Successfully Login');
+      loginState.setLoading(false);
+      if (!mounted) return;
+      Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+        return Home(username: enteredEmail);
+      }));
+    } else {
+      print('Something went wrong : ${res.statusCode}');
+      Utils.flushBarErrorMessage(context, '${res.statusCode}');
+      loginState.setLoading(false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final loginState = Provider.of<UserProvider>(context);
     return SafeArea(
       // child: PopScope(
       //   canPop: false,
@@ -243,40 +266,15 @@ class _LoginState extends State<Login> {
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
-                                      String enteredEmail = email.text;
-                                      Navigator.push(context, MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                        return Home(username: enteredEmail);
-                                      }));
-                                      // setState(() {
-                                      //   isLoading = true;
-                                      // });
+                                      login();
                                       // String enteredEmail = email.text;
-                                      // var res = await performLogin(
-                                      //     email.text, password.text);
-                                      // if (res.statusCode == 500) {
-                                      //   print('Successfully Login');
-                                      //   setState(() {
-                                      //     isLoading = false;
-                                      //   });
-                                      //   if (!mounted) return;
-                                      //   Navigator.push(context,
-                                      //       MaterialPageRoute(builder:
-                                      //           (BuildContext context) {
-                                      //     return Home(username: enteredEmail);
-                                      //   }));
-                                      // } else {
-                                      //   print(
-                                      //       'Something went wrong : ${res.statusCode}');
-                                      //   Utils.flushBarErrorMessage(
-                                      //       context, '${res.statusCode}');
-                                      //   setState(() {
-                                      //     isLoading = false;
-                                      //   });
-                                      // }
+                                      // Navigator.push(context, MaterialPageRoute(
+                                      //     builder: (BuildContext context) {
+                                      //   return Home(username: enteredEmail);
+                                      // }));
                                     }
                                   },
-                                  child: isLoading
+                                  child: loginState.isLoading
                                       ? const CircularProgressIndicator(
                                           color: Colors.white,
                                         )
