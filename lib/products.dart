@@ -72,114 +72,226 @@ class _ProductsState extends State<Products> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(children: [
-            FutureBuilder<List<Data>>(
-              future: futureData,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.blue,
-                      ),
+            Expanded(
+                child: SingleChildScrollView(
+              child: Center(
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(columns: const [
+                      DataColumn(label: Text('Product name')),
+                      DataColumn(label: Text('Product code')),
+                      DataColumn(label: Text('Actual price')),
+                      DataColumn(label: Text('Sale price')),
+                      DataColumn(label: Text('Category')),
+                      DataColumn(label: Text('Stock quantity')),
+                      DataColumn(label: Text('Thumbnail')),
+                      DataColumn(label: Text('Brand')),
+                      DataColumn(label: Text('Actions')),
+                    ], rows: [
+                      // snapshot.data!
+                      //     .map((data) =>
+                      DataRow(cells: [
+                        DataCell(Text('Laptops')),
+                        const DataCell(
+                          Center(
+                            child: Text('250'),
+                          ),
+                        ),
+                        const DataCell(
+                          Center(
+                            child: Text('1200'),
+                          ),
+                        ),
+                        const DataCell(
+                          Center(
+                            child: Text('1300'),
+                          ),
+                        ),
+                        const DataCell(
+                          Center(
+                            child: Text('Apple'),
+                          ),
+                        ),
+                        const DataCell(
+                          Center(
+                            child: Text('7'),
+                          ),
+                        ),
+                        const DataCell(
+                          Center(
+                            child: Text('Mohsin'),
+                          ),
+                        ),
+                        const DataCell(
+                          Center(
+                            child: Text('Apple'),
+                          ),
+                        ),
+                        DataCell(Center(
+                          child: PopupMenuButton(
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                  value: 1, child: Text('Create Proposal')),
+                              const PopupMenuItem(
+                                  value: 2, child: Text('Send Email')),
+                              PopupMenuItem(
+                                  value: 3,
+                                  child: const Text('Edit'),
+                                  onTap: () {}),
+                              PopupMenuItem(
+                                value: 4,
+                                child: const Text('View'),
+                                onTap: () {},
+                              ),
+                              const PopupMenuItem(
+                                  value: 5, child: Text('Delete'))
+                            ],
+                            // onSelected: (value) async {
+                            //   if (value == 3) {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             EditLead(leadData: data),
+                            //       ),
+                            //     ).then((_) {
+                            //       setState(() {
+                            //         futureData = getLeadsData();
+                            //       });
+                            //     });
+                            //   }
+                            //   if (value == 4) {
+                            //     Navigator.pushNamed(context, '/view',
+                            //         arguments: data);
+                            //   }
+                            //   if (value == 5) {
+                            //     var res = await deleteLead(
+                            //       data.id,
+                            //     );
+                            //     log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
+                            //     Navigator.pushReplacementNamed(
+                            //         context, '/allLeads');
+                            //     setState(() {
+                            //       futureData = getLeadsData();
+                            //     });
+                            //   }
+                            // },
+                          ),
+                        )),
+                      ])
+                    ])
+                    //.toList(),
                     ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Expanded(
-                    child: Center(child: Text('Error: ${snapshot.error}')),
-                  );
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Expanded(
-                    child: Center(child: Text('No data available.')),
-                  );
-                }
-                return Expanded(
-                    child: SingleChildScrollView(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        columns: const [
-                          DataColumn(label: Text('Product name')),
-                          DataColumn(label: Text('Product code')),
-                          DataColumn(label: Text('Actual price')),
-                          DataColumn(label: Text('Sale price')),
-                          DataColumn(label: Text('Category')),
-                          DataColumn(label: Text('Stock quantity')),
-                          DataColumn(label: Text('Thumbnail')),
-                          DataColumn(label: Text('Brand')),
-                          DataColumn(label: Text('Actions')),
-                        ],
-                        rows: snapshot.data!
-                            .map((data) => DataRow(cells: [
-                                  DataCell(Text(data.label)),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('250'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('1200'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('1300'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('Apple'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('7'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('Mohsin'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('Apple'),
-                                    ),
-                                  ),
-                                  DataCell(Center(
-                                    child: PopupMenuButton(
-                                      itemBuilder: (context) => const [
-                                        PopupMenuItem(
-                                          value: 1,
-                                          child: Text('Edit'),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 2,
-                                          child: Text('View'),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 2,
-                                          child: Text('Delete'),
-                                        )
-                                      ],
-                                      onSelected: (value) async {
-                                        if (value == 1) {
-                                          Navigator.pushNamed(
-                                              context, '/editProduct');
-                                        }
-                                        if (value == 2) {}
-                                      },
-                                    ),
-                                  )),
-                                ]))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                ));
-              },
-            ),
+              ),
+            ))
+            // FutureBuilder<List<Data>>(
+            //   future: futureData,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return const Expanded(
+            //         child: Center(
+            //           child: CircularProgressIndicator(
+            //             color: Colors.blue,
+            //           ),
+            //         ),
+            //       );
+            //     } else if (snapshot.hasError) {
+            //       return Expanded(
+            //         child: Center(child: Text('Error: ${snapshot.error}')),
+            //       );
+            //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //       return const Expanded(
+            //         child: Center(child: Text('No data available.')),
+            //       );
+            //     }
+            //     return Expanded(
+            //         child: SingleChildScrollView(
+            //       child: Center(
+            //         child: SingleChildScrollView(
+            //           scrollDirection: Axis.horizontal,
+            //           child: DataTable(
+            //             columns: const [
+            //               DataColumn(label: Text('Product name')),
+            //               DataColumn(label: Text('Product code')),
+            //               DataColumn(label: Text('Actual price')),
+            //               DataColumn(label: Text('Sale price')),
+            //               DataColumn(label: Text('Category')),
+            //               DataColumn(label: Text('Stock quantity')),
+            //               DataColumn(label: Text('Thumbnail')),
+            //               DataColumn(label: Text('Brand')),
+            //               DataColumn(label: Text('Actions')),
+            //             ],
+            //             rows: snapshot.data!
+            //                 .map((data) => DataRow(cells: [
+            //                       DataCell(Text(data.label)),
+            //                       const DataCell(
+            //                         Center(
+            //                           child: Text('250'),
+            //                         ),
+            //                       ),
+            //                       const DataCell(
+            //                         Center(
+            //                           child: Text('1200'),
+            //                         ),
+            //                       ),
+            //                       const DataCell(
+            //                         Center(
+            //                           child: Text('1300'),
+            //                         ),
+            //                       ),
+            //                       const DataCell(
+            //                         Center(
+            //                           child: Text('Apple'),
+            //                         ),
+            //                       ),
+            //                       const DataCell(
+            //                         Center(
+            //                           child: Text('7'),
+            //                         ),
+            //                       ),
+            //                       const DataCell(
+            //                         Center(
+            //                           child: Text('Mohsin'),
+            //                         ),
+            //                       ),
+            //                       const DataCell(
+            //                         Center(
+            //                           child: Text('Apple'),
+            //                         ),
+            //                       ),
+            //                       DataCell(Center(
+            //                         child: PopupMenuButton(
+            //                           itemBuilder: (context) => const [
+            //                             PopupMenuItem(
+            //                               value: 1,
+            //                               child: Text('Edit'),
+            //                             ),
+            //                             PopupMenuItem(
+            //                               value: 2,
+            //                               child: Text('View'),
+            //                             ),
+            //                             PopupMenuItem(
+            //                               value: 2,
+            //                               child: Text('Delete'),
+            //                             )
+            //                           ],
+            //                           onSelected: (value) async {
+            //                             if (value == 1) {
+            //                               Navigator.pushNamed(
+            //                                   context, '/editProduct');
+            //                             }
+            //                             if (value == 2) {}
+            //                           },
+            //                         ),
+            //                       )),
+            //                     ]))
+            //                 .toList(),
+            //           ),
+            //         ),
+            //       ),
+            //     ));
+            //   },
+            // ),
           ]),
         ));
   }

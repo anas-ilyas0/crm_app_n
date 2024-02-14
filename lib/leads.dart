@@ -84,26 +84,6 @@ class _AllLeadsState extends State<AllLeads> {
         body: Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Column(children: [
-              //ListView.builder(
-              //future: futureData,
-              //itemBuilder: (context, snapshot) {
-              // if (snapshot.connectionState == ConnectionState.waiting) {
-              //   return const Expanded(
-              //     child: Center(
-              //       child: CircularProgressIndicator(
-              //         color: Colors.blue,
-              //       ),
-              //     ),
-              //   );
-              // } else if (snapshot.hasError) {
-              //   return Expanded(
-              //     child: Center(child: Text('Error: ${snapshot.error}')),
-              //   );
-              // } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              //   return const Expanded(
-              //     child: Center(child: Text('No data available.')),
-              //   );
-              // }
               Expanded(
                   child: SingleChildScrollView(
                 child: Center(
