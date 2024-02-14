@@ -86,100 +86,171 @@ class _CategoriesState extends State<Categories> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-          FutureBuilder<List<Data>>(
-            future: futureData,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.blue,
-                    ),
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Expanded(
-                  child: Center(child: Text('Error: ${snapshot.error}')),
-                );
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Expanded(
-                  child: Center(child: Text('No data available.')),
-                );
-              }
-              return Expanded(
-                child: SingleChildScrollView(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        columns: const [
-                          DataColumn(label: Text('Category')),
-                          DataColumn(label: Text('Photo')),
-                          DataColumn(label: Text('Actions')),
-                        ],
-                        rows: snapshot.data!
-                            .map((data) => DataRow(cells: [
-                                  DataCell(Text(data.name)),
-                                  DataCell(
-                                    Center(
-                                      child: Text(data.photo),
-                                    ),
-                                  ),
-                                  DataCell(Center(
-                                    child: PopupMenuButton(
-                                      itemBuilder: (context) => const [
-                                        PopupMenuItem(
-                                          value: 1,
-                                          child: Text('Edit'),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 2,
-                                          child: Text('View'),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 3,
-                                          child: Text('Delete'),
-                                        )
-                                      ],
-                                      onSelected: (value) async {
-                                        if (value == 1) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditCategory(
-                                                      categoryData: data),
-                                            ),
-                                          ).then((_) {
-                                            setState(() {
-                                              futureData = getCategories();
-                                            });
-                                          });
-                                        } else if (value == 2) {
-                                          Navigator.pushNamed(
-                                              context, '/viewCategory');
-                                        } else if (value == 3) {
-                                          var res =
-                                              await deleteCategory(data.id);
-                                          log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
-                                          // Navigator.pushReplacementNamed(
-                                          //     context, '/categories');
-                                          setState(() {
-                                            futureData = getCategories();
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  )),
-                                ]))
-                            .toList(),
+          Expanded(
+              child: SingleChildScrollView(
+            child: Center(
+              child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(columns: const [
+                    DataColumn(label: Text('Category')),
+                    DataColumn(label: Text('Photo')),
+                    DataColumn(label: Text('Actions')),
+                  ], rows: [
+                    // snapshot.data!
+                    //     .map((data) =>
+                    DataRow(cells: [
+                      const DataCell(Text('Brand')),
+                      const DataCell(
+                        Center(
+                          child: Text('Photo'),
+                        ),
                       ),
-                    ),
+                      DataCell(Center(
+                        child: PopupMenuButton(
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                                value: 3,
+                                child: const Text('Edit'),
+                                onTap: () {}),
+                            PopupMenuItem(
+                              value: 4,
+                              child: const Text('View'),
+                              onTap: () {},
+                            ),
+                            const PopupMenuItem(value: 5, child: Text('Delete'))
+                          ],
+                          // onSelected: (value) async {
+                          //   if (value == 3) {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) =>
+                          //             EditLead(leadData: data),
+                          //       ),
+                          //     ).then((_) {
+                          //       setState(() {
+                          //         futureData = getLeadsData();
+                          //       });
+                          //     });
+                          //   }
+                          //   if (value == 4) {
+                          //     Navigator.pushNamed(context, '/view',
+                          //         arguments: data);
+                          //   }
+                          //   if (value == 5) {
+                          //     var res = await deleteLead(
+                          //       data.id,
+                          //     );
+                          //     log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
+                          //     Navigator.pushReplacementNamed(
+                          //         context, '/allLeads');
+                          //     setState(() {
+                          //       futureData = getLeadsData();
+                          //     });
+                          //   }
+                          // },
+                        ),
+                      )),
+                    ])
+                  ])
+                  //.toList(),
                   ),
-                ),
-              );
-            },
-          ),
+            ),
+          ))
+          // FutureBuilder<List<Data>>(
+          //   future: futureData,
+          //   builder: (context, snapshot) {
+          //     if (snapshot.connectionState == ConnectionState.waiting) {
+          //       return const Expanded(
+          //         child: Center(
+          //           child: CircularProgressIndicator(
+          //             color: Colors.blue,
+          //           ),
+          //         ),
+          //       );
+          //     } else if (snapshot.hasError) {
+          //       return Expanded(
+          //         child: Center(child: Text('Error: ${snapshot.error}')),
+          //       );
+          //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          //       return const Expanded(
+          //         child: Center(child: Text('No data available.')),
+          //       );
+          //     }
+          //     return Expanded(
+          //       child: SingleChildScrollView(
+          //         child: Center(
+          //           child: SingleChildScrollView(
+          //             scrollDirection: Axis.horizontal,
+          //             child: DataTable(
+          //               columns: const [
+          //                 DataColumn(label: Text('Category')),
+          //                 DataColumn(label: Text('Photo')),
+          //                 DataColumn(label: Text('Actions')),
+          //               ],
+          //               rows: snapshot.data!
+          //                   .map((data) => DataRow(cells: [
+          //                         DataCell(Text(data.name)),
+          //                         DataCell(
+          //                           Center(
+          //                             child: Text(data.photo),
+          //                           ),
+          //                         ),
+          //                         DataCell(Center(
+          //                           child: PopupMenuButton(
+          //                             itemBuilder: (context) => const [
+          //                               PopupMenuItem(
+          //                                 value: 1,
+          //                                 child: Text('Edit'),
+          //                               ),
+          //                               PopupMenuItem(
+          //                                 value: 2,
+          //                                 child: Text('View'),
+          //                               ),
+          //                               PopupMenuItem(
+          //                                 value: 3,
+          //                                 child: Text('Delete'),
+          //                               )
+          //                             ],
+          //                             onSelected: (value) async {
+          //                               if (value == 1) {
+          //                                 Navigator.push(
+          //                                   context,
+          //                                   MaterialPageRoute(
+          //                                     builder: (context) =>
+          //                                         EditCategory(
+          //                                             categoryData: data),
+          //                                   ),
+          //                                 ).then((_) {
+          //                                   setState(() {
+          //                                     futureData = getCategories();
+          //                                   });
+          //                                 });
+          //                               } else if (value == 2) {
+          //                                 Navigator.pushNamed(
+          //                                     context, '/viewCategory');
+          //                               } else if (value == 3) {
+          //                                 var res =
+          //                                     await deleteCategory(data.id);
+          //                                 log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
+          //                                 // Navigator.pushReplacementNamed(
+          //                                 //     context, '/categories');
+          //                                 setState(() {
+          //                                   futureData = getCategories();
+          //                                 });
+          //                               }
+          //                             },
+          //                           ),
+          //                         )),
+          //                       ]))
+          //                   .toList(),
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
         ]),
       ),
     );

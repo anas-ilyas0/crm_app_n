@@ -81,105 +81,177 @@ class _BrandsState extends State<Brands> {
         body: Padding(
           padding: const EdgeInsets.only(top: 20),
           child: Column(children: [
-            FutureBuilder<List<Data>>(
-              future: futureData,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.blue,
-                      ),
+            Expanded(
+                child: SingleChildScrollView(
+              child: Center(
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(columns: const [
+                      DataColumn(label: Text('Title')),
+                      DataColumn(label: Text('Status')),
+                      DataColumn(label: Text('Actions')),
+                    ], rows: [
+                      // snapshot.data!
+                      //     .map((data) =>
+                      DataRow(cells: [
+                        const DataCell(Text('Title')),
+                        const DataCell(
+                          Center(
+                            child: Text('Status'),
+                          ),
+                        ),
+                        DataCell(Center(
+                          child: PopupMenuButton(
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                  value: 3,
+                                  child: const Text('Edit'),
+                                  onTap: () {}),
+                              PopupMenuItem(
+                                value: 4,
+                                child: const Text('View'),
+                                onTap: () {},
+                              ),
+                              const PopupMenuItem(
+                                  value: 5, child: Text('Delete'))
+                            ],
+                            // onSelected: (value) async {
+                            //   if (value == 3) {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             EditLead(leadData: data),
+                            //       ),
+                            //     ).then((_) {
+                            //       setState(() {
+                            //         futureData = getLeadsData();
+                            //       });
+                            //     });
+                            //   }
+                            //   if (value == 4) {
+                            //     Navigator.pushNamed(context, '/view',
+                            //         arguments: data);
+                            //   }
+                            //   if (value == 5) {
+                            //     var res = await deleteLead(
+                            //       data.id,
+                            //     );
+                            //     log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
+                            //     Navigator.pushReplacementNamed(
+                            //         context, '/allLeads');
+                            //     setState(() {
+                            //       futureData = getLeadsData();
+                            //     });
+                            //   }
+                            // },
+                          ),
+                        )),
+                      ])
+                    ])
+                    //.toList(),
                     ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Expanded(
-                    child: Center(child: Text('Error: ${snapshot.error}')),
-                  );
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Expanded(
-                    child: Center(child: Text('No data available.')),
-                  );
-                }
-                return Expanded(
-                    child: SingleChildScrollView(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        columns: const [
-                          DataColumn(label: Text('Title')),
-                          // DataColumn(label: Text('Icon')),
-                          DataColumn(label: Text('Status')),
-                          DataColumn(label: Text('Actions')),
-                        ],
-                        rows: snapshot.data!
-                            .map((data) => DataRow(cells: [
-                                  DataCell(Text(data.title)),
-                                  // DataCell(
-                                  //   CachedNetworkImage(
-                                  //     width: 40,
-                                  //     imageUrl:
-                                  //         'https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png',
-                                  //     placeholder: (context, url) =>
-                                  //         const CircularProgressIndicator(),
-                                  //     errorWidget: (context, url, error) =>
-                                  //         const Icon(Icons.error),
-                                  //   ),
-                                  // ),
-                                  DataCell(Text(data.status)),
-                                  DataCell(Center(
-                                    child: PopupMenuButton(
-                                      itemBuilder: (context) => const [
-                                        PopupMenuItem(
-                                          value: 1,
-                                          child: Text('Edit'),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 2,
-                                          child: Text('View'),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 3,
-                                          child: Text('Delete'),
-                                        )
-                                      ],
-                                      onSelected: (value) async {
-                                        if (value == 1) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditBrand(brandData: data),
-                                            ),
-                                          ).then((_) {
-                                            setState(() {
-                                              futureData = getBrandsData();
-                                            });
-                                          });
-                                        }
-                                        if (value == 3) {
-                                          var res = await deleteBrand(
-                                            data.id,
-                                          );
-                                          log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
-                                          Navigator.pushReplacementNamed(
-                                              context, '/brands');
-                                          setState(() {
-                                            futureData = getBrandsData();
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  )),
-                                ]))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                ));
-              },
-            ),
+              ),
+            ))
+            // FutureBuilder<List<Data>>(
+            //   future: futureData,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return const Expanded(
+            //         child: Center(
+            //           child: CircularProgressIndicator(
+            //             color: Colors.blue,
+            //           ),
+            //         ),
+            //       );
+            //     } else if (snapshot.hasError) {
+            //       return Expanded(
+            //         child: Center(child: Text('Error: ${snapshot.error}')),
+            //       );
+            //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //       return const Expanded(
+            //         child: Center(child: Text('No data available.')),
+            //       );
+            //     }
+            //     return Expanded(
+            //         child: SingleChildScrollView(
+            //       child: Center(
+            //         child: SingleChildScrollView(
+            //           scrollDirection: Axis.horizontal,
+            //           child: DataTable(
+            //             columns: const [
+            //               DataColumn(label: Text('Title')),
+            //               // DataColumn(label: Text('Icon')),
+            //               DataColumn(label: Text('Status')),
+            //               DataColumn(label: Text('Actions')),
+            //             ],
+            //             rows: snapshot.data!
+            //                 .map((data) => DataRow(cells: [
+            //                       DataCell(Text(data.title)),
+            //                       // DataCell(
+            //                       //   CachedNetworkImage(
+            //                       //     width: 40,
+            //                       //     imageUrl:
+            //                       //         'https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png',
+            //                       //     placeholder: (context, url) =>
+            //                       //         const CircularProgressIndicator(),
+            //                       //     errorWidget: (context, url, error) =>
+            //                       //         const Icon(Icons.error),
+            //                       //   ),
+            //                       // ),
+            //                       DataCell(Text(data.status)),
+            //                       DataCell(Center(
+            //                         child: PopupMenuButton(
+            //                           itemBuilder: (context) => const [
+            //                             PopupMenuItem(
+            //                               value: 1,
+            //                               child: Text('Edit'),
+            //                             ),
+            //                             PopupMenuItem(
+            //                               value: 2,
+            //                               child: Text('View'),
+            //                             ),
+            //                             PopupMenuItem(
+            //                               value: 3,
+            //                               child: Text('Delete'),
+            //                             )
+            //                           ],
+            //                           onSelected: (value) async {
+            //                             if (value == 1) {
+            //                               Navigator.push(
+            //                                 context,
+            //                                 MaterialPageRoute(
+            //                                   builder: (context) =>
+            //                                       EditBrand(brandData: data),
+            //                                 ),
+            //                               ).then((_) {
+            //                                 setState(() {
+            //                                   futureData = getBrandsData();
+            //                                 });
+            //                               });
+            //                             }
+            //                             if (value == 3) {
+            //                               var res = await deleteBrand(
+            //                                 data.id,
+            //                               );
+            //                               log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
+            //                               Navigator.pushReplacementNamed(
+            //                                   context, '/brands');
+            //                               setState(() {
+            //                                 futureData = getBrandsData();
+            //                               });
+            //                             }
+            //                           },
+            //                         ),
+            //                       )),
+            //                     ]))
+            //                 .toList(),
+            //           ),
+            //         ),
+            //       ),
+            //     ));
+            //   },
+            // ),
           ]),
         ));
   }

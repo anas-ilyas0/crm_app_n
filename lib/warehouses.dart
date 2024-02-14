@@ -82,92 +82,158 @@ class _WarehousesState extends State<Warehouses> {
         body: Padding(
           padding: const EdgeInsets.only(top: 20),
           child: Column(children: [
-            FutureBuilder<List<Data>>(
-              future: futureData,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.blue,
-                      ),
+            Expanded(
+                child: SingleChildScrollView(
+              child: Center(
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(columns: const [
+                      DataColumn(label: Text('Name')),
+                      DataColumn(label: Text('Actions')),
+                    ], rows: [
+                      // snapshot.data!
+                      //     .map((data) =>
+                      DataRow(cells: [
+                        const DataCell(Text('Warehouse')),
+                        DataCell(Center(
+                          child: PopupMenuButton(
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                  value: 3,
+                                  child: const Text('Edit'),
+                                  onTap: () {}),
+                              PopupMenuItem(
+                                value: 4,
+                                child: const Text('View'),
+                                onTap: () {},
+                              ),
+                              const PopupMenuItem(
+                                  value: 5, child: Text('Delete'))
+                            ],
+                            // onSelected: (value) async {
+                            //   if (value == 3) {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             EditLead(leadData: data),
+                            //       ),
+                            //     ).then((_) {
+                            //       setState(() {
+                            //         futureData = getLeadsData();
+                            //       });
+                            //     });
+                            //   }
+                            //   if (value == 4) {
+                            //     Navigator.pushNamed(context, '/view',
+                            //         arguments: data);
+                            //   }
+                            //   if (value == 5) {
+                            //     var res = await deleteLead(
+                            //       data.id,
+                            //     );
+                            //     log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
+                            //     Navigator.pushReplacementNamed(
+                            //         context, '/allLeads');
+                            //     setState(() {
+                            //       futureData = getLeadsData();
+                            //     });
+                            //   }
+                            // },
+                          ),
+                        )),
+                      ])
+                    ])
+                    //.toList(),
                     ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Expanded(
-                    child: Center(child: Text('Error: ${snapshot.error}')),
-                  );
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Expanded(
-                    child: Center(child: Text('No data available.')),
-                  );
-                }
-                return Expanded(
-                    child: SingleChildScrollView(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        columns: const [
-                          DataColumn(label: Text('Name')),
-                          DataColumn(label: Text('Actions')),
-                        ],
-                        rows: snapshot.data!
-                            .map((data) => DataRow(cells: [
-                                  DataCell(Text(data.name)),
-                                  DataCell(Center(
-                                    child: PopupMenuButton(
-                                      itemBuilder: (context) => const [
-                                        PopupMenuItem(
-                                          value: 1,
-                                          child: Text('Edit'),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 2,
-                                          child: Text('View'),
-                                        ),
-                                        PopupMenuItem(
-                                          value: 3,
-                                          child: Text('Delete'),
-                                        )
-                                      ],
-                                      onSelected: (value) async {
-                                        if (value == 1) {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditWarehouse(
-                                                      warehouseData: data),
-                                            ),
-                                          ).then((_) {
-                                            setState(() {
-                                              futureData = getWarehousesData();
-                                            });
-                                          });
-                                        }
-                                        if (value == 3) {
-                                          var res = await deleteWarehouse(
-                                            data.id,
-                                          );
-                                          log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
-                                          Navigator.pushReplacementNamed(
-                                              context, '/warehouses');
-                                          setState(() {
-                                            futureData = getWarehousesData();
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  )),
-                                ]))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                ));
-              },
-            ),
+              ),
+            ))
+            // FutureBuilder<List<Data>>(
+            //   future: futureData,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return const Expanded(
+            //         child: Center(
+            //           child: CircularProgressIndicator(
+            //             color: Colors.blue,
+            //           ),
+            //         ),
+            //       );
+            //     } else if (snapshot.hasError) {
+            //       return Expanded(
+            //         child: Center(child: Text('Error: ${snapshot.error}')),
+            //       );
+            //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //       return const Expanded(
+            //         child: Center(child: Text('No data available.')),
+            //       );
+            //     }
+            //     return Expanded(
+            //         child: SingleChildScrollView(
+            //       child: Center(
+            //         child: SingleChildScrollView(
+            //           scrollDirection: Axis.horizontal,
+            //           child: DataTable(
+            //             columns: const [
+            //               DataColumn(label: Text('Name')),
+            //               DataColumn(label: Text('Actions')),
+            //             ],
+            //             rows: snapshot.data!
+            //                 .map((data) => DataRow(cells: [
+            //                       DataCell(Text(data.name)),
+            //                       DataCell(Center(
+            //                         child: PopupMenuButton(
+            //                           itemBuilder: (context) => const [
+            //                             PopupMenuItem(
+            //                               value: 1,
+            //                               child: Text('Edit'),
+            //                             ),
+            //                             PopupMenuItem(
+            //                               value: 2,
+            //                               child: Text('View'),
+            //                             ),
+            //                             PopupMenuItem(
+            //                               value: 3,
+            //                               child: Text('Delete'),
+            //                             )
+            //                           ],
+            //                           onSelected: (value) async {
+            //                             if (value == 1) {
+            //                               Navigator.push(
+            //                                 context,
+            //                                 MaterialPageRoute(
+            //                                   builder: (context) =>
+            //                                       EditWarehouse(
+            //                                           warehouseData: data),
+            //                                 ),
+            //                               ).then((_) {
+            //                                 setState(() {
+            //                                   futureData = getWarehousesData();
+            //                                 });
+            //                               });
+            //                             }
+            //                             if (value == 3) {
+            //                               var res = await deleteWarehouse(
+            //                                 data.id,
+            //                               );
+            //                               log('res statusCode : ${res.statusCode} >>> body : ${res.body}');
+            //                               Navigator.pushReplacementNamed(
+            //                                   context, '/warehouses');
+            //                               setState(() {
+            //                                 futureData = getWarehousesData();
+            //                               });
+            //                             }
+            //                           },
+            //                         ),
+            //                       )),
+            //                     ]))
+            //                 .toList(),
+            //           ),
+            //         ),
+            //       ),
+            //     ));
+            //   },
+            // ),
           ]),
         )
         //Center(

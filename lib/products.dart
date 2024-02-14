@@ -130,10 +130,6 @@ class _ProductsState extends State<Products> {
                         DataCell(Center(
                           child: PopupMenuButton(
                             itemBuilder: (context) => [
-                              const PopupMenuItem(
-                                  value: 1, child: Text('Create Proposal')),
-                              const PopupMenuItem(
-                                  value: 2, child: Text('Send Email')),
                               PopupMenuItem(
                                   value: 3,
                                   child: const Text('Edit'),
