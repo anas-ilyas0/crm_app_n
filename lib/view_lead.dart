@@ -9,8 +9,18 @@ class ViewLead extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.blue,
+          centerTitle: true,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: const Text(
             'View Lead',
+            style: TextStyle(color: Colors.white),
           ),
         ),
         body: SafeArea(
@@ -23,9 +33,10 @@ class ViewLead extends StatelessWidget {
               ),
               children: const [
                 GridTileofApp(
-                    image: 'images/details.png',
-                    firstText: 'Details',
-                    secondText: ''),
+                  image: 'images/details.png',
+                  firstText: 'Details',
+                  secondText: '',
+                ),
                 GridTileofApp(
                     image: 'images/contactV.png',
                     firstText: 'Contact',

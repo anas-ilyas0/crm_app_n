@@ -46,9 +46,9 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        title: json["title"],
+        title: json["title"] ?? 'null',
         icon: json["icon"],
-        status: json["status"],
+        status: json["status"] ?? 'null',
         updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
         id: json["id"],

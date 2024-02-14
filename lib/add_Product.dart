@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'dart:io';
+import 'package:crm_new/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -1394,7 +1395,7 @@ class _AddProductState extends State<AddProduct> {
                     currentStep = step;
                   });
                 } else {
-                  showSnackbar('Please filled required fields');
+                  Utils.showSnackbar(context, 'Please filled required fields');
                 }
               },
               onStepContinue: () {
@@ -1403,7 +1404,7 @@ class _AddProductState extends State<AddProduct> {
                     currentStep += 1;
                   });
                 } else {
-                  showSnackbar('Please filled required fields');
+                  Utils.showSnackbar(context, 'Please filled required fields');
                 }
               },
               onStepCancel: () {
@@ -1416,14 +1417,5 @@ class _AddProductState extends State<AddProduct> {
             ),
           ),
         ));
-  }
-
-  void showSnackbar(String text) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 1),
-        content: Text(text),
-      ),
-    );
   }
 }

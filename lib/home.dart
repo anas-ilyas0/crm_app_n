@@ -1,3 +1,4 @@
+import 'package:crm_new/sql_offlineData.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -134,6 +135,10 @@ class Home extends StatelessWidget {
                   firstText: 'Logout',
                   secondText: '',
                   image: 'images/logout.png'),
+              // GridTileofApp(
+              //     firstText: 'Offline',
+              //     secondText: 'Data',
+              //     image: 'images/emily.png'),
             ],
           ),
         ),
@@ -156,6 +161,9 @@ class GridTileofApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)?.settings.arguments;
+    //as Data; // Ensure correct type casting
+
     return GestureDetector(
       onTap: () {
         if (firstText == 'Dashboard' && secondText == '') {
@@ -359,8 +367,8 @@ class GridTileofApp extends StatelessWidget {
         if (firstText == 'Logout') {
           Navigator.pop(context);
         }
-        if (firstText == 'Details') {
-          Navigator.pushNamed(context, '/details');
+        if (firstText == 'Details' && secondText == '') {
+          Navigator.pushNamed(context, '/details', arguments: data);
         }
         if (firstText == 'Contact' && secondText == 'Notes') {
           Navigator.pushNamed(context, '/contactNotes');
@@ -403,6 +411,11 @@ class GridTileofApp extends StatelessWidget {
         }
         if (firstText == 'Mailchimp') {
           Navigator.pushNamed(context, '/mailchimp');
+        }
+        if (firstText == 'Offline' && secondText == 'Data') {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const SQLOfflineData();
+          }));
         }
       },
       child: Column(

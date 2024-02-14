@@ -1,8 +1,8 @@
-// ignore_for_file: avoid_unnecessary_containers, avoid_print, use_build_context_synchronously
+// ignore_for_file: file_names, // ignore_for_file: avoid_unnecessary_containers, avoid_print, use_build_context_synchronously
 import 'dart:io';
 import 'package:crm_new/leads.dart';
-import 'package:crm_new/helpers/leadPostApi.dart';
-import 'package:crm_new/utils/utils.dart';
+import 'package:crm_new/helpers/leadEditApi.dart';
+import 'package:crm_new/models/leadsModel.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,40 +10,90 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class CreateLead extends StatefulWidget {
-  const CreateLead({super.key});
+class EditLead extends StatefulWidget {
+  final Data leadData;
+  const EditLead({Key? key, required this.leadData}) : super(key: key);
 
   @override
-  State<CreateLead> createState() => _CreateLeadState();
+  State<EditLead> createState() => _EditLeadState();
 }
 
-class _CreateLeadState extends State<CreateLead> {
+class _EditLeadState extends State<EditLead> {
   File? selectedImage;
+  late TextEditingController editFirstName;
+  late TextEditingController editLastName;
+  late TextEditingController editCompanyName;
+  late TextEditingController editEmail;
+  late TextEditingController editAddress;
+  late TextEditingController editGroup;
+  late TextEditingController editSkype;
+  late TextEditingController editTaxID;
+  late TextEditingController editCurrencyController;
+  late TextEditingController editLanguage;
+  late TextEditingController editContactType;
+  late TextEditingController editCity;
+  late TextEditingController editState;
+  late TextEditingController editZip;
+  late TextEditingController editPhone1;
+  late TextEditingController editPhone2;
 
-  String fullName = '';
-  TextEditingController firstName = TextEditingController();
-  TextEditingController lastName = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController address = TextEditingController();
-  TextEditingController company = TextEditingController();
-  TextEditingController group = TextEditingController();
-  TextEditingController skype = TextEditingController();
-  TextEditingController taxID = TextEditingController();
-  TextEditingController currencyController = TextEditingController();
-  TextEditingController language = TextEditingController();
-  TextEditingController contactType = TextEditingController();
-  TextEditingController city = TextEditingController();
-  TextEditingController state = TextEditingController();
-  TextEditingController zip = TextEditingController();
-  TextEditingController phone1 = TextEditingController();
-  TextEditingController phone2 = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    // Initialize controllers with values from widget.leadData
+    editFirstName = TextEditingController(text: widget.leadData.firstName);
+    editLastName = TextEditingController(text: widget.leadData.lastName);
+    editCompanyName =
+        TextEditingController(text: widget.leadData.companyId.toString());
+    editEmail = TextEditingController(text: widget.leadData.email);
+    editAddress = TextEditingController(text: widget.leadData.fulladdress);
+    //editCompany =
+    TextEditingController(text: widget.leadData.companyId.toString());
+    editGroup = TextEditingController(text: widget.leadData.groupId.toString());
+    editSkype = TextEditingController(text: widget.leadData.skype);
+    editTaxID = TextEditingController(text: widget.leadData.taxId.toString());
+    editCurrencyController =
+        TextEditingController(text: widget.leadData.currencyId.toString());
+    editLanguage =
+        TextEditingController(text: widget.leadData.languageId.toString());
+    editContactType = TextEditingController(text: widget.leadData.typeContact);
+    editCity = TextEditingController(text: widget.leadData.city);
+    editState = TextEditingController(text: widget.leadData.stateRegion);
+    editZip =
+        TextEditingController(text: widget.leadData.zipPostalCode.toString());
+    editPhone1 = TextEditingController(text: widget.leadData.phone1.toString());
+    editPhone2 = TextEditingController(text: widget.leadData.phone2.toString());
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the controllers when the widget is removed from the widget tree
+    editFirstName.dispose();
+    editLastName.dispose();
+    editEmail.dispose();
+    editAddress.dispose();
+    editCompanyName.dispose();
+    editGroup.dispose();
+    editSkype.dispose();
+    editTaxID.dispose();
+    editCurrencyController.dispose();
+    editLanguage.dispose();
+    editContactType.dispose();
+    editCity.dispose();
+    editState.dispose();
+    editZip.dispose();
+    editPhone1.dispose();
+    editPhone2.dispose();
+    super.dispose();
+  }
+
   //copy controllers
-  TextEditingController copyFirstName = TextEditingController();
-  TextEditingController copyLastName = TextEditingController();
-  TextEditingController copyAddress = TextEditingController();
-  TextEditingController copyCity = TextEditingController();
-  TextEditingController copyState = TextEditingController();
-  TextEditingController copyZip = TextEditingController();
+  // TextEditingController copyFirstName = TextEditingController();
+  // TextEditingController copyLastName = TextEditingController();
+  // TextEditingController copyAddress = TextEditingController();
+  // TextEditingController copyCity = TextEditingController();
+  // TextEditingController copyState = TextEditingController();
+  // TextEditingController copyZip = TextEditingController();
 
   int currentStep = 0;
 
@@ -53,7 +103,7 @@ class _CreateLeadState extends State<CreateLead> {
 
   List<String> contactTypes = ['Lead 1', 'Lead 2', 'Lead 3'];
 
-  List<String> currencies = [
+  List<String> currencyy = [
     'USD',
     'PKR',
     'AED',
@@ -95,48 +145,43 @@ class _CreateLeadState extends State<CreateLead> {
               children: [
                 const SizedBox(height: 25, child: Text('First Name*')),
                 TextFormField(
-                  controller: firstName,
+                  controller: editFirstName,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return ('Please write your name');
+                      return ('Please enter your name');
                     }
                     return null;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // onChanged: (value) {
-                  // dataProvider.name;
-                  // },
-                  // onSaved: (value) {
-                  // dataProvider.name = value!;
-                  // },
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Last Name')),
                 TextFormField(
-                  controller: lastName,
+                  controller: editLastName,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Company Name*')),
                 TextFormField(
-                  controller: company,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
+                  controller: editCompanyName,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return ('Write your company name');
+                      return ('Please enter your compamy name');
                     }
                     return null;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(height: 20),
-                const SizedBox(height: 25, child: Text('Email*')),
+                const SizedBox(height: 25, child: Text('Email')),
                 TextFormField(
-                  controller: email,
+                  controller: editEmail,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
                   validator: (value) {
@@ -153,9 +198,16 @@ class _CreateLeadState extends State<CreateLead> {
                 const SizedBox(height: 20),
                 const SizedBox(height: 25, child: Text('Address')),
                 TextFormField(
-                  controller: address,
+                  controller: editAddress,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder()),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return ('Mention your address');
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
               ],
             )),
@@ -187,7 +239,7 @@ class _CreateLeadState extends State<CreateLead> {
                     .toList(),
                 onChanged: (value) {
                   contactTypee = value.toString();
-                  contactType.text = contactTypee;
+                  //contactType.text = contactTypee;
                 },
               ),
               const SizedBox(height: 20),
@@ -198,7 +250,7 @@ class _CreateLeadState extends State<CreateLead> {
                   border: OutlineInputBorder(),
                 ),
                 hint: const Text('USD', style: TextStyle(fontSize: 14)),
-                items: currencies
+                items: currencyy
                     .map((item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
@@ -216,17 +268,17 @@ class _CreateLeadState extends State<CreateLead> {
               const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('Phone 1')),
               IntlPhoneField(
-                  controller: phone1,
+                  controller: editPhone1,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder())),
               const SizedBox(height: 25, child: Text('Phone 2')),
               IntlPhoneField(
-                  controller: phone2,
+                  controller: editPhone2,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder())),
               const SizedBox(height: 25, child: Text('Skype')),
               TextFormField(
-                  controller: skype,
+                  controller: editSkype,
                   decoration:
                       const InputDecoration(border: OutlineInputBorder())),
             ],
@@ -241,31 +293,31 @@ class _CreateLeadState extends State<CreateLead> {
             children: [
               const SizedBox(height: 25, child: Text('Language')),
               TextFormField(
-                controller: language,
+                controller: editLanguage,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
               const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('Group')),
               TextFormField(
-                controller: group,
+                controller: editGroup,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
               const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('Tax ID')),
               TextFormField(
-                controller: taxID,
+                controller: editTaxID,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
               const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('City')),
               TextFormField(
-                controller: city,
+                controller: editCity,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
               const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('State/region')),
               TextFormField(
-                controller: state,
+                controller: editState,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
             ],
@@ -280,7 +332,7 @@ class _CreateLeadState extends State<CreateLead> {
             children: [
               const SizedBox(height: 25, child: Text('Zip/postal code')),
               TextFormField(
-                controller: zip,
+                controller: editZip,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
               ),
               const SizedBox(height: 20),
@@ -363,12 +415,12 @@ class _CreateLeadState extends State<CreateLead> {
                     alignment: Alignment.center,
                     child: GestureDetector(
                         onTap: () {
-                          copyFirstName.text = firstName.text;
-                          copyLastName.text = lastName.text;
-                          copyAddress.text = address.text;
-                          copyCity.text = city.text;
-                          copyState.text = state.text;
-                          copyZip.text = zip.text;
+                          // copyFirstName.text = firstName.text;
+                          // copyLastName.text = lastName.text;
+                          // copyAddress.text = address.text;
+                          // copyCity.text = city.text;
+                          // copyState.text = state.text;
+                          // copyZip.text = zip.text;
                         },
                         child: const Text('Copy Address',
                             //textAlign: TextAlign.center,
@@ -376,10 +428,10 @@ class _CreateLeadState extends State<CreateLead> {
                   )),
               const SizedBox(height: 20),
               const SizedBox(height: 25, child: Text('First Name')),
-              TextField(
-                controller: copyFirstName,
+              const TextField(
+                //controller: copyFirstName,
                 readOnly: true,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(border: OutlineInputBorder()),
               ),
             ],
           ),
@@ -388,42 +440,42 @@ class _CreateLeadState extends State<CreateLead> {
           isActive: currentStep >= 4,
           state: currentStep <= 4 ? StepState.indexed : StepState.complete,
           title: const Text(''),
-          content: Column(
+          content: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 25, child: Text('Last Name')),
+              SizedBox(height: 25, child: Text('Last Name')),
               TextField(
-                controller: copyLastName,
+                //controller: copyLastName,
                 readOnly: true,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(border: OutlineInputBorder()),
               ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Address')),
+              SizedBox(height: 20),
+              SizedBox(height: 25, child: Text('Address')),
               TextField(
-                controller: copyAddress,
+                //controller: copyAddress,
                 readOnly: true,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(border: OutlineInputBorder()),
               ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('City')),
+              SizedBox(height: 20),
+              SizedBox(height: 25, child: Text('City')),
               TextField(
-                controller: copyCity,
+                //controller: copyCity,
                 readOnly: true,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(border: OutlineInputBorder()),
               ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('State/region')),
+              SizedBox(height: 20),
+              SizedBox(height: 25, child: Text('State/region')),
               TextField(
-                controller: copyState,
+                //controller: copyState,
                 readOnly: true,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(border: OutlineInputBorder()),
               ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 25, child: Text('Zip/postal code')),
+              SizedBox(height: 20),
+              SizedBox(height: 25, child: Text('Zip/postal code')),
               TextField(
-                controller: copyZip,
+                //controller: copyZip,
                 readOnly: true,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(border: OutlineInputBorder()),
               ),
             ],
           ),
@@ -465,7 +517,7 @@ class _CreateLeadState extends State<CreateLead> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Create Lead'),
+          title: const Text('Edit Lead'),
           backgroundColor: Colors.white,
         ),
         body: SafeArea(
@@ -494,7 +546,7 @@ class _CreateLeadState extends State<CreateLead> {
                               backgroundColor: Colors.indigo),
                           onPressed: details.onStepContinue,
                           child: Text(
-                            currentStep == 5 ? 'Save' : 'Next',
+                            currentStep == 5 ? 'Update' : 'Next',
                             style: const TextStyle(color: Colors.white),
                           )),
                     ],
@@ -506,14 +558,10 @@ class _CreateLeadState extends State<CreateLead> {
               elevation: 0,
               currentStep: currentStep,
               onStepTapped: (step) {
-                if (_formKey.currentState!.validate()) {
-                  setState(() {
-                    currentStep = step;
-                  });
-                } else {
-                  Utils
-                      .showSnackbar(context, 'Please filled required fields');
-                }
+                _formKey.currentState!.validate();
+                setState(() {
+                  currentStep = step;
+                });
               },
               onStepContinue: () async {
                 if (_formKey.currentState!.validate()) {
@@ -524,24 +572,26 @@ class _CreateLeadState extends State<CreateLead> {
                   } else {
                     //String fullName = '${firstName.text} ${lastName.text}';
                     try {
-                      var res = await leadPostRequest(
-                        firstName.text,
-                        lastName.text,
-                        //contactType.text,
-                        email.text,
-                        address.text,
-                        group.text,
-                        phone1.text,
-                        phone2.text,
-                        skype.text,
-                        city.text,
-                        state.text,
-                        zip.text,
-                        taxID.text,
-                        language.text,
-                      );
+                      var res = await updateLead(
+                          widget.leadData.id,
+                          editFirstName.text,
+                          editLastName.text,
+                          editCompanyName.text.toString(),
+                          editEmail.text,
+                          editAddress.text,
+                          editGroup.text.toString(),
+                          editSkype.text.toString(),
+                          editTaxID.text.toString(),
+                          editCurrencyController.text.toString(),
+                          editLanguage.text.toString(),
+                          editContactType.text.toString(),
+                          editCity.text.toString(),
+                          editState.text.toString(),
+                          editZip.text.toString(),
+                          editPhone1.text.toString(),
+                          editPhone2.text.toString());
                       if (res.statusCode == 200) {
-                        print('Lead Registered');
+                        print('Lead Updated');
                         if (!mounted) return;
                         Navigator.pop(context);
                         Navigator.pushReplacement(context,
@@ -556,9 +606,6 @@ class _CreateLeadState extends State<CreateLead> {
                       print('Exception caught: $e');
                     }
                   }
-                } else {
-                  Utils
-                      .showSnackbar(context, 'Please filled required fields');
                 }
               },
               onStepCancel: () {

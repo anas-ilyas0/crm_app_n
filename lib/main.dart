@@ -53,7 +53,7 @@ import 'package:crm_new/add_Tag.dart';
 import 'package:crm_new/add_Task.dart';
 import 'package:crm_new/add_Transfer.dart';
 import 'package:crm_new/add_Warehouse.dart';
-import 'package:crm_new/all_registered_leads.dart';
+import 'package:crm_new/leads.dart';
 import 'package:crm_new/articles.dart';
 import 'package:crm_new/assets.dart';
 import 'package:crm_new/assets_Report.dart';
@@ -99,7 +99,6 @@ import 'package:crm_new/products_Report.dart';
 import 'package:crm_new/products_Transfer.dart';
 import 'package:crm_new/projects.dart';
 import 'package:crm_new/proposals.dart';
-import 'package:crm_new/providers/user_provider.dart';
 import 'package:crm_new/purchase_Orders_Report.dart';
 import 'package:crm_new/purchase_orders.dart';
 import 'package:crm_new/quick_notifications.dart';
@@ -126,6 +125,7 @@ import 'package:crm_new/view_Recurring_Invoice.dart';
 import 'package:crm_new/view_Recurring_Period.dart';
 import 'package:crm_new/view_contract.dart';
 import 'package:crm_new/view_lead.dart';
+import 'package:crm_new/view_model/authViewModel.dart';
 import 'package:crm_new/view_proposal.dart';
 import 'package:crm_new/warehouses.dart';
 import 'package:flutter/material.dart';
@@ -142,11 +142,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => UserProvider(),
-        )
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => AuthViewModel())],
       child: MaterialApp(home: const Login(), routes: {
         '/login': (context) => const Login(),
         '/home': (context) => const Home(username: ''),
@@ -260,7 +256,7 @@ class MyApp extends StatelessWidget {
         '/allLeads': (context) => const AllLeads(),
         '/create': (context) => const CreateLead(),
         '/view': (context) => const ViewLead(),
-        '/details': (context) => const LeadDetils(),
+        '/details': (context) => const LeadDetails(),
         '/contactNotes': (context) => const ContactNotes(),
         '/contactDoc': (context) => const ContactDocuments(),
         '/proposals': (context) => const Proposals(),

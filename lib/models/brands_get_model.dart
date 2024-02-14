@@ -49,9 +49,9 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
-        title: json["title"],
+        title: json["title"] ?? 'null',
         icon: json["icon"] != null ? json["icon"] : null.toString(),
-        status: json["status"],
+        status: json["status"] ?? 'null',
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"],

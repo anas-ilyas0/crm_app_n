@@ -46,7 +46,12 @@ dependencies:
   syncfusion_flutter_charts: ^24.1.41
   syncfusion_flutter_signaturepad: ^24.1.46
   http: ^1.1.2
+  sqflite: ^2.3.1
   cached_network_image: ^3.3.1
+  connectivity_plus: ^5.0.2
+  sizer: ^2.0.15
+  fluttertoast: ^8.2.4
+  another_flushbar: ^1.12.30
 
 dev_dependencies:
   flutter_test:

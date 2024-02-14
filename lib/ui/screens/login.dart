@@ -1,6 +1,6 @@
-// ignore_for_file: avoid_print
-import 'package:crm_new/helpers/loginPostApi.dart';
+// ignore_for_file: avoid_print, avoid_unnecessary_containers, use_build_context_synchronously
 import 'package:crm_new/home.dart';
+import 'package:crm_new/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -18,10 +18,39 @@ class _LoginState extends State<Login> {
   bool passwordVisible = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      // child: PopScope(
+      //   canPop: false,
+      //   onPopInvoked: (bool didPop) {
+      //     if (didPop) {
+      //       return;
+      //     }
+      //     showDialog(
+      //         context: context,
+      //         builder: (BuildContext context) {
+      //           return AlertDialog(
+      //             title: const Text('Are you sure you want to go back'),
+      //             actions: [
+      //               ElevatedButton(
+      //                   onPressed: () {
+      //                     Navigator.pop(context);
+      //                   },
+      //                   child: const Text('Cancel')),
+      //               ElevatedButton(
+      //                   onPressed: () {
+      //                     SystemChannels.platform
+      //                         .invokeMethod('SystemNavigator.pop');
+      //                   },
+      //                   child: const Text('Yes'))
+      //             ],
+      //           );
+      //         });
+      //   },
       child: Scaffold(
         backgroundColor: const Color(0xFFF2F2F2),
         body: ListView(
@@ -32,7 +61,6 @@ class _LoginState extends State<Login> {
               child: Column(children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 25),
-                  // ignore: avoid_unnecessary_containers
                   child: Container(
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -91,6 +119,7 @@ class _LoginState extends State<Login> {
                                 children: [
                                   TextFormField(
                                     controller: email,
+                                    focusNode: emailFocusNode,
                                     keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
                                         border: OutlineInputBorder(
@@ -111,6 +140,10 @@ class _LoginState extends State<Login> {
                                     },
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
+                                    onFieldSubmitted: (value) {
+                                      Utils.fieldFocusChange(context,
+                                          emailFocusNode, passwordFocusNode);
+                                    },
                                   ),
                                   const SizedBox(height: 20),
                                   const Padding(
@@ -125,6 +158,7 @@ class _LoginState extends State<Login> {
                                   const SizedBox(height: 20),
                                   TextFormField(
                                     controller: password,
+                                    focusNode: passwordFocusNode,
                                     obscureText: !passwordVisible,
                                     decoration: InputDecoration(
                                       // suffixIconConstraints: const BoxConstraints(
@@ -209,46 +243,51 @@ class _LoginState extends State<Login> {
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
-                                      setState(() {
-                                        //isLoading = true; // Start loading
-                                      });
                                       String enteredEmail = email.text;
-                                      // var res = await performLogin(
-                                      // email.text, password.text);
-                                      // if (res.statusCode == 200) {
-                                      // print('Successfully Login');
-                                      // if (!mounted) return;
-                                      // Navigator.push(context,
-                                      // MaterialPageRoute(builder:
-                                      // (BuildContext context) {
-                                      // return Home(username: enteredEmail);
-                                      // }));
-                                      // } else {
-                                      // print(
-                                      // 'Something went wrong : ${res.statusCode}');
-                                      // }
                                       Navigator.push(context, MaterialPageRoute(
                                           builder: (BuildContext context) {
                                         return Home(username: enteredEmail);
                                       }));
+                                      // setState(() {
+                                      //   isLoading = true;
+                                      // });
+                                      // String enteredEmail = email.text;
+                                      // var res = await performLogin(
+                                      //     email.text, password.text);
+                                      // if (res.statusCode == 500) {
+                                      //   print('Successfully Login');
+                                      //   setState(() {
+                                      //     isLoading = false;
+                                      //   });
+                                      //   if (!mounted) return;
+                                      //   Navigator.push(context,
+                                      //       MaterialPageRoute(builder:
+                                      //           (BuildContext context) {
+                                      //     return Home(username: enteredEmail);
+                                      //   }));
+                                      // } else {
+                                      //   print(
+                                      //       'Something went wrong : ${res.statusCode}');
+                                      //   Utils.flushBarErrorMessage(
+                                      //       context, '${res.statusCode}');
+                                      //   setState(() {
+                                      //     isLoading = false;
+                                      //   });
+                                      // }
                                     }
                                   },
-                                  child: const Text(
-                                    'Sign In  >',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                  )),
+                                  child: isLoading
+                                      ? const CircularProgressIndicator(
+                                          color: Colors.white,
+                                        )
+                                      : const Text(
+                                          'Sign In  >',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20),
+                                        )),
                             ),
                           ),
-                          // TextButton(
-                          // onPressed: () {},
-                          // child: const Text(
-                          // 'Don`t have an account?',
-                          // style: TextStyle(
-                          // color: Colors.black,
-                          // fontSize: 18,
-                          // fontWeight: FontWeight.bold),
-                          // ))
                         ],
                       ),
                     ),
