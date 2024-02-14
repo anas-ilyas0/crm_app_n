@@ -169,60 +169,6 @@ class _WarehousesState extends State<Warehouses> {
               },
             ),
           ]),
-        )
-        //Center(
-        //   child: Padding(
-        //     padding: const EdgeInsets.only(top: 20),
-        //     child: Column(children: [
-        //       Expanded(
-        //         child: SingleChildScrollView(
-        //           scrollDirection: Axis.vertical,
-        //           child: Expanded(
-        //             child: SingleChildScrollView(
-        //               scrollDirection: Axis.horizontal,
-        //               child: DataTable(
-        //                   columns: const [
-        //                     DataColumn(label: Text('Name')),
-        //                     DataColumn(label: Text('Actions')),
-        //                   ],
-        //                   rows: List<DataRow>.generate(
-        //                     5,
-        //                     (index) {
-        //                       return DataRow(cells: [
-        //                         const DataCell(
-        //                           Center(
-        //                             child: Text('London Warehouse'),
-        //                           ),
-        //                         ),
-        //                         DataCell(Center(
-        //                           child: PopupMenuButton(
-        //                               itemBuilder: (context) => [
-        //                                     PopupMenuItem(
-        //                                         value: 1,
-        //                                         child: const Text('Edit'),
-        //                                         onTap: () {}),
-        //                                     PopupMenuItem(
-        //                                       value: 2,
-        //                                       child: const Text('View'),
-        //                                       onTap: () {},
-        //                                     ),
-        //                                     PopupMenuItem(
-        //                                       value: 3,
-        //                                       child: const Text('Delete'),
-        //                                       onTap: () {},
-        //                                     )
-        //                                   ]),
-        //                         ))
-        //                       ]);
-        //                     },
-        //                   )),
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ]),
-        //   ),
-        // )
-        );
+        ));
   }
 }
