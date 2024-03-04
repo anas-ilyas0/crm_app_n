@@ -4,6 +4,7 @@ import 'package:crm_new/home.dart';
 import 'package:crm_new/providers/user_provider.dart';
 import 'package:crm_new/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -22,6 +23,21 @@ class _LoginState extends State<Login> {
   TextEditingController password = TextEditingController();
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   email = TextEditingController();
+  //   password = TextEditingController();
+  //   // Initialize other state variables...
+  // }
+
+  @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
 
   void login() async {
     final loginState = Provider.of<UserProvider>(context, listen: false);
@@ -43,37 +59,54 @@ class _LoginState extends State<Login> {
     }
   }
 
+  // Future<void> delayedFunction() async {
+  //   final loginState = Provider.of<UserProvider>(context, listen: false);
+  //   loginState.setLoading(true);
+  //   await Future.delayed(Duration(seconds: 3));
+  //   String tempEmail = email.text;
+  //   String enteredEmail = tempEmail;
+  //   if (!mounted) return;
+  //   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+  //     return Home(username: enteredEmail);
+  //   })).then((v) {
+  //     //if (!mounted) return;
+  //     loginState.setLoading(false);
+  //     email.clear();
+  //     password.clear();
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     final loginState = Provider.of<UserProvider>(context);
     return SafeArea(
-      // child: PopScope(
-      //   canPop: false,
-      //   onPopInvoked: (bool didPop) {
-      //     if (didPop) {
-      //       return;
-      //     }
-      //     showDialog(
-      //         context: context,
-      //         builder: (BuildContext context) {
-      //           return AlertDialog(
-      //             title: const Text('Are you sure you want to go back'),
-      //             actions: [
-      //               ElevatedButton(
-      //                   onPressed: () {
-      //                     Navigator.pop(context);
-      //                   },
-      //                   child: const Text('Cancel')),
-      //               ElevatedButton(
-      //                   onPressed: () {
-      //                     SystemChannels.platform
-      //                         .invokeMethod('SystemNavigator.pop');
-      //                   },
-      //                   child: const Text('Yes'))
-      //             ],
-      //           );
-      //         });
-      //   },
+        child: PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) {
+        if (didPop) {
+          return;
+        }
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Are you sure you want to go back'),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Cancel')),
+                  ElevatedButton(
+                      onPressed: () {
+                        SystemChannels.platform
+                            .invokeMethod('SystemNavigator.pop');
+                      },
+                      child: const Text('Yes'))
+                ],
+              );
+            });
+      },
       child: Scaffold(
         backgroundColor: const Color(0xFFF2F2F2),
         body: ListView(
@@ -266,12 +299,8 @@ class _LoginState extends State<Login> {
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
+                                      //delayedFunction();
                                       login();
-                                      // String enteredEmail = email.text;
-                                      // Navigator.push(context, MaterialPageRoute(
-                                      //     builder: (BuildContext context) {
-                                      //   return Home(username: enteredEmail);
-                                      // }));
                                     }
                                   },
                                   child: loginState.isLoading
@@ -296,6 +325,6 @@ class _LoginState extends State<Login> {
           ].reversed.toList(),
         ),
       ),
-    );
+    ));
   }
 }

@@ -5,31 +5,47 @@ import 'dart:developer';
 import 'package:crm_new/editLead.dart';
 import 'package:crm_new/helpers/leadDeleteApi.dart';
 import 'package:crm_new/models/leadsModel.dart';
+import 'package:crm_new/resources/components/app_url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+// Future<http.Response> getLeadsData() async {
+//   String token = AppUrl.token;
+//   String leadsURL = AppUrl.leadsURL;
+//   var headers = {
+//     'Accept': 'application/json',
+//     'Authorization': 'Bearer $token'
+//   };
+//   var request = http.Request('GET', Uri.parse('$leadsURL'));
+
+//   request.headers.addAll(headers);
+//   http.StreamedResponse response = await request.send();
+//   return await http.Response.fromStream(response);
+// }
+
 Future<List<Data>> getLeadsData() async {
+  String token = AppUrl.token;
+  String leadsURL = AppUrl.leadsURL;
   var headers = {
     'Accept': 'application/json',
-    'Authorization':
-        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTc5MDIxYTVkNzVjNjRlN2JkMWEzMDFiNWFhNDM4NmE5ZDg2ODhiYWIzOGNlMGJlZjc1ZThmYzc4NTk3NDUxMmY2NzU5ZDYzYTQyMjhiZTEiLCJpYXQiOjE3MDQ2MzE3NTQuNzA3NDQyMDQ1MjExNzkxOTkyMTg3NSwibmJmIjoxNzA0NjMxNzU0LjcwNzQ0NDkwNjIzNDc0MTIxMDkzNzUsImV4cCI6MTczNjI1NDE1NC4wOTY0OTMwMDU3NTI1NjM0NzY1NjI1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ohcBGh5fmRjTjPHUCXdjsMZIH8rZE0iqMGh7n6PnLS3mk-cPbs63U6JR6pM6poKcvMyuxa-v9QXUXpUx_0rkD_NRM2CPkkvG5tg3XdH9rGjdB122TDXMECThlPMUNTv7mDUfnixfIMVN97udEbeVQX4HC1ty5UFuIlw-OBOzTOHw23-XddaS6ymx6ieDAwZjm1BsW3HpabTL3ZKXBfdB4_XbfmB15LYEDxa-Kj8_2B9Fo9PR6_6FGjzfCGrRdK6nyvof6ITWep74d5MOSg-ZGBlt31gGd8MQEVQGhaIUI1RXVD5BpMckQ9OTNCTdKn-lu1xmqphsbGonmT88pIHts0J1Ugm5MDmhkHB2IPKHxtpnQN50qAQg-7xBOmhyfeUKUhStHGtVnKTcVHGMtrZL_F-ARCDUkkhoVwNj6q483tt66EJqDdF_EOU0dNvBOGG-BtpPEwsMymPUyegljY4Oh4malvl7zFzHZ1U2sBnyCPuRDsXLxr1CGOrFiEl_hIjzO2QXWHZZgIzUnMKOPP4yUzIOFOpFiHyZuhz_Fz1AH6fuSDvGb04MqXAwZPyhULVSH1g31UKQ4Sv3U2RK-Z5MX-6VzsQ-y3dZkd4saw7e9C_0DWKhCPs_TWBvsuWShqT5vNQ05GBRU7WibBsn0whcHJMzzAdpPP5gMUC712FwvLs'
+    'Authorization': 'Bearer ${token}'
   };
-  var url = Uri.parse('https://testcrm.thesuperstarshop.com/api/v1/leads');
+  var url = Uri.parse(leadsURL);
 
   try {
-    var response = await http.get(url, headers: headers);
+    var res = await http.get(url, headers: headers);
 
-    if (response.statusCode == 200) {
-      var jsonResponse = json.decode(response.body);
+    if (res.statusCode == 200) {
+      var jsonResponse = json.decode(res.body);
       LeadsModel leadsData = LeadsModel.fromJson(jsonResponse);
-      print('Successfully Fetched Data');
+      print('Successfully Fetched Data${jsonResponse}');
       return leadsData.data;
     } else {
-      print('Error: ${response.reasonPhrase}');
+      print('Error: ${res.reasonPhrase}');
       return [];
     }
   } catch (e) {
-    print('Exception occurred: $e');
+    print('Exception occurred: ${e}');
     return [];
   }
 }
@@ -119,10 +135,13 @@ class _AllLeadsState extends State<AllLeads> {
                         ],
                         rows: snapshot.data!
                             .map((data) => DataRow(cells: [
-                                  DataCell(Text(data.name)),
-                                  DataCell(Text(data.typeContact)),
-                                  DataCell(Text(data.email)),
-                                  DataCell(Text(data.fulladdress)),
+                                  DataCell(
+                                    Text(
+                                        '${data.name}'), // Use 'N/A' if name is null
+                                  ),
+                                  DataCell(Text('${data.typeContact}')),
+                                  DataCell(Text('${data.email}')),
+                                  DataCell(Text('${data.fulladdress}')),
                                   DataCell(Center(
                                     child: PopupMenuButton(
                                       itemBuilder: (context) => [

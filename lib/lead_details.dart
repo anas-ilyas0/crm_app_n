@@ -51,13 +51,15 @@ class _LeadDetailsState extends State<LeadDetails> {
                   title: 'Email',
                   value: data.email,
                 ),
-                LeadDetailsClass(
-                  title: 'Address',
-                  value: data.fulladdress,
+                Expanded(
+                  child: LeadDetailsClass(
+                    title: 'Address',
+                    value: data.fulladdress,
+                  ),
                 ),
                 LeadDetailsClass(
                   title: 'Contact Type',
-                  value: data.typeContact,
+                  value: data.typeContact.toString(),
                 ),
                 LeadDetailsClass(
                   title: 'Company',
@@ -93,7 +95,7 @@ class _LeadDetailsState extends State<LeadDetails> {
                 ),
                 LeadDetailsClass(
                   title: 'Tax ID',
-                  value: data.taxId.toString(),
+                  value: data.taxId,
                 ),
                 LeadDetailsClass(
                   title: 'Country',
@@ -109,11 +111,11 @@ class _LeadDetailsState extends State<LeadDetails> {
                 ),
                 LeadDetailsClass(
                   title: 'Thumbnail',
-                  value: data.thumbnail,
+                  //value: data.thumbnail.toString(),
                 ),
-                const LeadDetailsClass(
+                LeadDetailsClass(
                   title: 'Delivery/shipping Address',
-                  //value: '${data.deliveryAddress}',
+                  //value: data.deliveryAddress.toString(),
                 ),
               ],
             ),
@@ -142,16 +144,31 @@ class LeadDetailsClass extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: titleStyle ??
-                const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: titleStyle ??
+                      const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ),
-          Text(
-            value,
-            style: valueStyle ?? const TextStyle(fontSize: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  value,
+                  style: valueStyle ?? const TextStyle(fontSize: 15),
+                ),
+              ],
+            ),
           )
         ],
       ),

@@ -511,8 +511,7 @@ class _CreateLeadState extends State<CreateLead> {
                     currentStep = step;
                   });
                 } else {
-                  Utils
-                      .showSnackbar(context, 'Please filled required fields');
+                  Utils.showSnackbar(context, 'Please filled required fields');
                 }
               },
               onStepContinue: () async {
@@ -557,8 +556,7 @@ class _CreateLeadState extends State<CreateLead> {
                     }
                   }
                 } else {
-                  Utils
-                      .showSnackbar(context, 'Please filled required fields');
+                  Utils.showSnackbar(context, 'Please filled required fields');
                 }
               },
               onStepCancel: () {

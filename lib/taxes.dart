@@ -11,7 +11,7 @@ Future<List<Data>> getTaxesData() async {
   var headers = {
     'Accept': 'application/json',
     'Authorization':
-        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTc5MDIxYTVkNzVjNjRlN2JkMWEzMDFiNWFhNDM4NmE5ZDg2ODhiYWIzOGNlMGJlZjc1ZThmYzc4NTk3NDUxMmY2NzU5ZDYzYTQyMjhiZTEiLCJpYXQiOjE3MDQ2MzE3NTQuNzA3NDQyMDQ1MjExNzkxOTkyMTg3NSwibmJmIjoxNzA0NjMxNzU0LjcwNzQ0NDkwNjIzNDc0MTIxMDkzNzUsImV4cCI6MTczNjI1NDE1NC4wOTY0OTMwMDU3NTI1NjM0NzY1NjI1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ohcBGh5fmRjTjPHUCXdjsMZIH8rZE0iqMGh7n6PnLS3mk-cPbs63U6JR6pM6poKcvMyuxa-v9QXUXpUx_0rkD_NRM2CPkkvG5tg3XdH9rGjdB122TDXMECThlPMUNTv7mDUfnixfIMVN97udEbeVQX4HC1ty5UFuIlw-OBOzTOHw23-XddaS6ymx6ieDAwZjm1BsW3HpabTL3ZKXBfdB4_XbfmB15LYEDxa-Kj8_2B9Fo9PR6_6FGjzfCGrRdK6nyvof6ITWep74d5MOSg-ZGBlt31gGd8MQEVQGhaIUI1RXVD5BpMckQ9OTNCTdKn-lu1xmqphsbGonmT88pIHts0J1Ugm5MDmhkHB2IPKHxtpnQN50qAQg-7xBOmhyfeUKUhStHGtVnKTcVHGMtrZL_F-ARCDUkkhoVwNj6q483tt66EJqDdF_EOU0dNvBOGG-BtpPEwsMymPUyegljY4Oh4malvl7zFzHZ1U2sBnyCPuRDsXLxr1CGOrFiEl_hIjzO2QXWHZZgIzUnMKOPP4yUzIOFOpFiHyZuhz_Fz1AH6fuSDvGb04MqXAwZPyhULVSH1g31UKQ4Sv3U2RK-Z5MX-6VzsQ-y3dZkd4saw7e9C_0DWKhCPs_TWBvsuWShqT5vNQ05GBRU7WibBsn0whcHJMzzAdpPP5gMUC712FwvLs'
+        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZWZiNTAyOWExZDcxZTE3NGRlN2Q2NDUwN2FhM2E5MGEyMDhlZTE3YTU2ZDRkOGU0MTJlNDI4NTcxNDQwNWM0MDRiMDU5OTk3MDhmMWIwNGQiLCJpYXQiOjE3MDk0Njk0NTcuNzc3Njk4MDQwMDA4NTQ0OTIxODc1LCJuYmYiOjE3MDk0Njk0NTcuNzc3Njk4OTkzNjgyODYxMzI4MTI1LCJleHAiOjE3NDEwMDU0NTcuNzczOTYzOTI4MjIyNjU2MjUsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.j1g1hfHtB1ywsaW4mTzge71xDij4UKPY7cuIODVQpxPkL174sxDlTolbO2h_cItKDKy1-1v9Bil3R84AVDx5_ZS7BfnPr68beKfk0sw9W8e26oohnnLkoQVbKluL3CJNv4y2Py8JOt7hHN4wkcAJ-g1RwxiTFO71YiDe9JEDyUlAOhEIUEvI8Nb_b6AIGSKjEe-ESyZeUp_kLTeztIhmZEFHsW0_RqK7Omgcuf04BdIa6In0aHxxz7godjPdRRNL5bPmK4VryR3WenRFHwFWWyKRoedFqtlugTS43YeutqPMErLCrUt7VFxc-d6B8sSF7mI4X8YIZoaunQQdLFy94b1YanSW-zTp8DT6GIQZkQHbRWM3xp-evpY3qKZxRmN2Ki42cYA9wVaCvGZgKZw-QYSOB39Vzs1jvb8QKCrpJ2CPK1wj8pXNeywzsn46nUweg0PUz8lUz0jT0eAcj_dMAJB8AZmMkxqAPr17JrVqY8jVgiPtC5fXXKANphOnQyk9cSjIM6CPTzR1z_oUAMPXf4sDivcJOCQXXsi49omAX9ddMFnb0P_L18uraHHr6QP1qL3am1i3ITeAa_NTo0fI6iNSX2LyWKlNNePCCvoFl01ZXbnnP_HhT5hWqxjbIXLBvIl0h-Rjaakde-ke0bPCNg2k7vnUTbZZBLl8Wiclnjw'
   };
   var url = Uri.parse('https://testcrm.thesuperstarshop.com/api/v1/taxes');
 
@@ -21,7 +21,7 @@ Future<List<Data>> getTaxesData() async {
     if (res.statusCode == 200) {
       var jsonResponse = json.decode(res.body);
       TaxesGetModel taxesData = TaxesGetModel.fromJson(jsonResponse);
-      print('Successfully Fetched Data');
+      print('Successfully Fetched Data${jsonResponse}');
       return taxesData.data;
     } else {
       print('Error: ${res.reasonPhrase}');

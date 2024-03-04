@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:crm_new/edit_category.dart';
 import 'package:crm_new/helpers/categoriesDeleteApi.dart';
+import 'package:crm_new/resources/components/app_url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:crm_new/models/categories_get_model.dart';
 
 Future<List<Data>> getCategories() async {
+  String token = AppUrl.token;
   var headers = {
     'Accept': 'application/json',
-    'Authorization':
-        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYjExYzgyZTYwMDVhNzBhMWNmMDY3ODljNjQ1NWZiZTJmYjRiMTY2ZDI0ZTZjZWJiZTFiY2E5NmY5YmU1MDA0MDFlZTQ1ZGZhNjQyN2Q5ZjEiLCJpYXQiOjE3MDU5MjA3ODcuNTQ1OTcwOTE2NzQ4MDQ2ODc1LCJuYmYiOjE3MDU5MjA3ODcuNTQ1OTc0MDE2MTg5NTc1MTk1MzEyNSwiZXhwIjoxNzM3NTQzMTg3LjIwMjc4MDAwODMxNjA0MDAzOTA2MjUsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.UzSoLgUka5KRa3roCrOYXlOF6yI07CUDv-jzdZeG47THIbZlRMTb6fQ5ARCw4cSoX-BmuycfzD1gwGyFnRt6c6sCrjEWUUOEi8UyaDAqMN8oYLV2Eytk4s-kiJtgQtS0-mN9nPvin1veprmJFx7TMZsoad5menF0Ddut-nme7aKR25-3WbcHXzqE8Rbxzw1nMMhe4rmtQ92HHIt2Y7WfKxLHgW21aN2PirhnPZZGNmjOBlW85R1f58opctBjwU8ZRu1sxed-T-9yhb_ZP4MxlNCFyI3tKAj_Ecds3FI_KHqFSPG94herlu1dkSH--YBXV38g1756Ct9eYojzvdBgBnwlEWrk7y6r8UyCVNP10E-5dVGnQR5UJWCiw8WdKh84ovgq2jquWxHOXSSO9lLGa5_yFOcp_ITQXU6BayPIsqd3M0OZOzYAhj1y05kKfeZ3NMKwlRPs97Udri1laW7s77BASO_AiHjl_oKnEuo76o3mEYy_fWSbpDcXuFkn5cBDSFlB0k0Pn5EGFzsP-It-G8mk7vH2oxj9WZ4RQLADwxgoCvM3gKNX1pVneHVFf3HomQhpDmJ4PqPwXJZqtlvChbYmJu0uYR6nvrvlb5wSVCSEwUAS59LgCAkmDFVFKoTdNVP6rMYdm-0yKGWY-9_NfAqib6adTuwcggaUtOEItus',
-    'Cookie':
-        'XSRF-TOKEN=eyJpdiI6Ik5KQUFGeDJna0k2TU9aZFZsdml4ZVE9PSIsInZhbHVlIjoicGoydFRQRmJ0eE1MWUhHVzhvdTljZzVUS2g0NCtNYmYvdStUa3R3ZjZ0Y1Fwc2NSRkFpdTZMUEJqK29pSEJWVVZpSXZxdVRudjhvRWpOL0JTeGx2Y1BkdGZZTU5JbG1BQnF0YVNUVTlSS09iejJqS0xHNGxVdW83M1RPL3VncTkiLCJtYWMiOiI3NmJmODdhZjA5Y2JkNDZiMjhmMjM0NzIwNTQ0YjA3MjEzNDI1ZTNkY2FjYTYwOGUyNzI3ZjBiZDgzYmYyZGJlIiwidGFnIjoiIn0%3D; crm_session=eyJpdiI6IjRINjRJUzRaVWlnRk10QWhRMjR2Y3c9PSIsInZhbHVlIjoiYnd5QU5uaTBUZ21RSjU4U01tSWtJZ0hwTGJQQ1lVTE1GeDJvbG1mayswcjZScEUzNjdjUnQ4M2RHbEdlK1UyUk1vaW1ZeTRTWUJIdnVTSVJYT1FBaklNSDY2L1hWajlzcDBCZ1h4R0JTa1lTaFlIUjg3T0xzUE10dE5MemdncHIiLCJtYWMiOiI0MGZiZWM0ZWFjOGNhMTNkZTcyMjNjNDg4OTcwY2EwN2Y1MjE0YmU5Mzc2NTk3ZGM2ODYxY2U0NGZlZmJjOGMyIiwidGFnIjoiIn0%3D'
+    'Authorization': 'Bearer $token',
+    'Cookie': 'XSRF-TOKEN=$token'
   };
 
   var url =

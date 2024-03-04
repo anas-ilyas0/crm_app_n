@@ -1,4 +1,3 @@
-import 'package:crm_new/sql_offlineData.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -31,7 +30,7 @@ class Home extends StatelessWidget {
                     fontWeight: FontWeight.bold)),
             trailing: IconButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.pop(context);
                 },
                 icon: const Icon(
                   Icons.logout,
@@ -411,11 +410,6 @@ class GridTileofApp extends StatelessWidget {
         }
         if (firstText == 'Mailchimp') {
           Navigator.pushNamed(context, '/mailchimp');
-        }
-        if (firstText == 'Offline' && secondText == 'Data') {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const SQLOfflineData();
-          }));
         }
       },
       child: Column(
