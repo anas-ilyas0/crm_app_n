@@ -3,17 +3,19 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:crm_new/editTax.dart';
 import 'package:crm_new/helpers/taxDeleteApi.dart';
+import 'package:crm_new/resources/components/app_url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:crm_new/models/tax_get_model.dart';
 
 Future<List<Data>> getTaxesData() async {
+  String token = AppUrl.token;
+  String taxesUrl = AppUrl.taxesUrl;
   var headers = {
     'Accept': 'application/json',
-    'Authorization':
-        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZWZiNTAyOWExZDcxZTE3NGRlN2Q2NDUwN2FhM2E5MGEyMDhlZTE3YTU2ZDRkOGU0MTJlNDI4NTcxNDQwNWM0MDRiMDU5OTk3MDhmMWIwNGQiLCJpYXQiOjE3MDk0Njk0NTcuNzc3Njk4MDQwMDA4NTQ0OTIxODc1LCJuYmYiOjE3MDk0Njk0NTcuNzc3Njk4OTkzNjgyODYxMzI4MTI1LCJleHAiOjE3NDEwMDU0NTcuNzczOTYzOTI4MjIyNjU2MjUsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.j1g1hfHtB1ywsaW4mTzge71xDij4UKPY7cuIODVQpxPkL174sxDlTolbO2h_cItKDKy1-1v9Bil3R84AVDx5_ZS7BfnPr68beKfk0sw9W8e26oohnnLkoQVbKluL3CJNv4y2Py8JOt7hHN4wkcAJ-g1RwxiTFO71YiDe9JEDyUlAOhEIUEvI8Nb_b6AIGSKjEe-ESyZeUp_kLTeztIhmZEFHsW0_RqK7Omgcuf04BdIa6In0aHxxz7godjPdRRNL5bPmK4VryR3WenRFHwFWWyKRoedFqtlugTS43YeutqPMErLCrUt7VFxc-d6B8sSF7mI4X8YIZoaunQQdLFy94b1YanSW-zTp8DT6GIQZkQHbRWM3xp-evpY3qKZxRmN2Ki42cYA9wVaCvGZgKZw-QYSOB39Vzs1jvb8QKCrpJ2CPK1wj8pXNeywzsn46nUweg0PUz8lUz0jT0eAcj_dMAJB8AZmMkxqAPr17JrVqY8jVgiPtC5fXXKANphOnQyk9cSjIM6CPTzR1z_oUAMPXf4sDivcJOCQXXsi49omAX9ddMFnb0P_L18uraHHr6QP1qL3am1i3ITeAa_NTo0fI6iNSX2LyWKlNNePCCvoFl01ZXbnnP_HhT5hWqxjbIXLBvIl0h-Rjaakde-ke0bPCNg2k7vnUTbZZBLl8Wiclnjw'
+    'Authorization': 'Bearer $token'
   };
-  var url = Uri.parse('https://testcrm.thesuperstarshop.com/api/v1/taxes');
+  var url = Uri.parse(taxesUrl);
 
   try {
     var res = await http.get(url, headers: headers);

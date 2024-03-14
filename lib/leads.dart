@@ -9,20 +9,6 @@ import 'package:crm_new/resources/components/app_url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-// Future<http.Response> getLeadsData() async {
-//   String token = AppUrl.token;
-//   String leadsURL = AppUrl.leadsURL;
-//   var headers = {
-//     'Accept': 'application/json',
-//     'Authorization': 'Bearer $token'
-//   };
-//   var request = http.Request('GET', Uri.parse('$leadsURL'));
-
-//   request.headers.addAll(headers);
-//   http.StreamedResponse response = await request.send();
-//   return await http.Response.fromStream(response);
-// }
-
 Future<List<Data>> getLeadsData() async {
   String token = AppUrl.token;
   String leadsURL = AppUrl.leadsURL;

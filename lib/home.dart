@@ -53,6 +53,10 @@ class Home extends StatelessWidget {
               GridTileofApp(
                   firstText: 'Leads', secondText: '', image: 'images/lead.png'),
               GridTileofApp(
+                  firstText: 'New',
+                  secondText: 'Lead',
+                  image: 'images/lead.png'),
+              GridTileofApp(
                   firstText: 'Sales',
                   secondText: '',
                   image: 'images/sales.png'),
@@ -170,6 +174,9 @@ class GridTileofApp extends StatelessWidget {
         }
         if (firstText == 'Leads') {
           Navigator.pushNamed(context, '/allLeads');
+        }
+        if (firstText == 'New' && secondText == 'Lead') {
+          Navigator.pushNamed(context, '/newLead');
         }
         if (firstText == 'Sales') {
           Navigator.pushNamed(context, '/sales');

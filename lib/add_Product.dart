@@ -18,6 +18,7 @@ class _AddProductState extends State<AddProduct> {
   File? selectedImage1;
   File? selectedImage2;
   File? selectedImage3;
+
   Future pickImageFromGallery1() async {
     final returnedImage1 =
         await ImagePicker().pickImage(source: ImageSource.gallery);

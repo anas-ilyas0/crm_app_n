@@ -18,9 +18,11 @@ import 'package:crm_new/discounts.dart';
 import 'package:crm_new/dynamic_options.dart';
 import 'package:crm_new/edit_product.dart';
 import 'package:crm_new/emailTemplates.dart';
+import 'package:crm_new/expansion_tiles.dart';
 import 'package:crm_new/goal_type.dart';
 import 'package:crm_new/languages.dart';
 import 'package:crm_new/masterSettings.dart';
+import 'package:crm_new/payment.dart';
 import 'package:crm_new/paymentGateways.dart';
 import 'package:crm_new/providers/user_provider.dart';
 import 'package:crm_new/taxes.dart';
@@ -115,6 +117,7 @@ import 'package:crm_new/tasks_Report.dart';
 import 'package:crm_new/ticket.dart';
 import 'package:crm_new/todo.dart';
 import 'package:crm_new/transfers.dart';
+import 'package:crm_new/ui/screens/new_lead/new_lead.dart';
 import 'package:crm_new/user_Actions.dart';
 import 'package:crm_new/user_Roles_Report.dart';
 import 'package:crm_new/users.dart';
@@ -258,6 +261,7 @@ class MyApp extends StatelessWidget {
         '/ticket': (context) => const Ticket(),
         '/addTicket': (context) => const AddTicket(),
         '/allLeads': (context) => const AllLeads(),
+        '/newLead': (context) => const NewLead(),
         '/create': (context) => const CreateLead(),
         '/view': (context) => const ViewLead(),
         '/details': (context) => const LeadDetails(),

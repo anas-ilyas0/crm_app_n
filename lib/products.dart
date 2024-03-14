@@ -3,17 +3,23 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:crm_new/models/products_get.dart';
+import 'package:crm_new/resources/components/app_url.dart';
 
 Future<List<Data>> getProducts() async {
-  var headers = {'Cookie': 'XSRF-TOKEN=...; pos_geniee_session=...'};
-  var url = Uri.parse('https://app.theposgeniee.com/api/v2/modules');
+  String token = AppUrl.token;
+  String productsURL = AppUrl.productsURL;
+  var headers = {
+    'Accept': 'application/json',
+    'Authorization': 'Bearer ${token}'
+  };
+  var url = Uri.parse(productsURL);
 
   try {
     var response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
-      GetProducts getProducts = GetProducts.fromJson(jsonResponse);
+      ProductsModel getProducts = ProductsModel.fromJson(jsonResponse);
       print('Successfully Fetched Data');
       return getProducts.data;
     } else {
@@ -100,6 +106,7 @@ class _ProductsState extends State<Products> {
                       child: DataTable(
                         columns: const [
                           DataColumn(label: Text('Product name')),
+                          DataColumn(label: Text('Business name')),
                           DataColumn(label: Text('Product code')),
                           DataColumn(label: Text('Actual price')),
                           DataColumn(label: Text('Sale price')),
@@ -111,42 +118,22 @@ class _ProductsState extends State<Products> {
                         ],
                         rows: snapshot.data!
                             .map((data) => DataRow(cells: [
-                                  DataCell(Text(data.label)),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('250'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('1200'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('1300'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('Apple'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('7'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('Mohsin'),
-                                    ),
-                                  ),
-                                  const DataCell(
-                                    Center(
-                                      child: Text('Apple'),
-                                    ),
-                                  ),
+                                  DataCell(Text(data.name)),
+                                  DataCell(Text(
+                                      data.business?.businessName ?? 'null')),
+                                  DataCell(Text(data.productCode)),
+                                  DataCell(
+                                      Text('\$${data.actualPrice.toString()}')),
+                                  DataCell(
+                                      Text('\$${data.salePrice.toString()}')),
+                                  DataCell(Text(data.category.isNotEmpty
+                                      ? data.category
+                                          .map((category) => category.name)
+                                          .join(', ')
+                                      : 'null')),
+                                  DataCell(Text(data.stockQuantity.toString())),
+                                  DataCell(Text(data.thumbnail)),
+                                  DataCell(Text(data.brand)),
                                   DataCell(Center(
                                     child: PopupMenuButton(
                                       itemBuilder: (context) => const [

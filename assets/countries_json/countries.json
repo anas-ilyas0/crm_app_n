@@ -1,0 +1,95 @@
+
+{
+	"status": 0,
+	"message": "Record fetch successfully!",
+	"data": [
+		{
+			"country_name": "Bahamas",
+			"country_code": "bs",
+			"name": "iPhone",
+			"field1": "price",
+			"field2": "camera",
+			"field3": "look"
+		},
+		{
+			"country_name": "Bahamas",
+			"country_code": "bs",
+			"name": "Cricket",
+			"field1": "balls",
+			"field2": "bat",
+			"field3": "stump"
+		},
+		{
+			"country_name": "Bahamas",
+			"country_code": "bs",
+			"name": "Music",
+			"field1": "bar1",
+			"field2": "test",
+			"field3": "user"
+		},
+		{
+			"country_name": "Denmark",
+			"country_code": "dk",
+			"name": "Library",
+			"field1": "books",
+			"field2": "author",
+			"field3": "pages"
+		},
+		{
+			"country_name": "Denmark",
+			"country_code": "dk",
+			"name": "SoundBar",
+			"field1": "song",
+			"field2": "lyrics",
+			"field3": "composer"
+		},
+		{
+			"country_name": "India",
+			"country_code": "in",
+			"name": "Galaxy S24",
+			"field1": "camera",
+			"field2": "photo",
+			"field3": "games"
+		},
+		{
+			"country_name": "India",
+			"country_code": "in",
+			"name": "Doctor",
+			"field1": "medicine",
+			"field2": "tablet",
+			"field3": "syrup"
+		},
+		{
+			"country_name": "India",
+			"country_code": "in",
+			"name": "iMac",
+			"field1": "cost",
+			"field2": "performance",
+			"field3": "durable"
+		},
+		{
+			"country_name": "India",
+			"country_code": "in",
+			"name": "Other",
+			"field1": "nothing",
+			"field2": "product",
+			"field3": "comment"
+		},
+		{
+			"country_name": "United States",
+			"country_code": "us",
+			"name": "Lawyer",
+			"field1": "law",
+			"field2": "books",
+			"field3": "court"
+		},
+		{
+			"country_name": "United States",
+			"country_code": "us",
+			"name": "iPhone 14",
+			"field1": "price",
+			"field2": "gallery",
+			"field3": "apps"
+		}
+	]
+}
